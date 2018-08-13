@@ -7,6 +7,7 @@ import com.colodoo.framework.utils.StringUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.lang.reflect.Method;
 import java.lang.reflect.ParameterizedType;
@@ -22,6 +23,7 @@ import java.util.List;
  * 3; 编写的初衷是为了简化DAO层的代码量
  */
 @Slf4j
+@Transactional
 public abstract class BaseService<M> {
 
     @Autowired
