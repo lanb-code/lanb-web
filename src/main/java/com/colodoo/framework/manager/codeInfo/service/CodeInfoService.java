@@ -19,8 +19,6 @@ public class CodeInfoService {
 
     public int save(CodeInfo model) {
     model.setCodeInfoId(StringUtil.uuid());
-        // model.setCreateDate(new Date());
-        // model.setLastDate(new Date());
         return codeInfoMapper.insert(model);
     }
 
@@ -42,8 +40,9 @@ public class CodeInfoService {
 
     public List<CodeInfo> query(CodeInfo model) {
         CodeInfoExample example = new CodeInfoExample();
-        if(model.getCodeTypeId() != null)
+        if(model.getCodeTypeId() != null) {
             example.createCriteria().andCodeTypeIdEqualTo(model.getCodeTypeId());
+        }
         return codeInfoMapper.selectByExample(example);
     }
 

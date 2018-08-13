@@ -23,7 +23,7 @@ import java.util.List;
  * 3; 编写的初衷是为了简化DAO层的代码量
  */
 @Slf4j
-@Transactional
+@Transactional(rollbackFor = Exception.class)
 public abstract class BaseService<M> {
 
     @Autowired
@@ -221,8 +221,9 @@ public abstract class BaseService<M> {
      * @return
      */
     private Class<M> getModelClass() {
-        if (this.modelClazz == null)
+        if (this.modelClazz == null) {
             this.modelClazz = (Class<M>) ((ParameterizedType) this.getClass().getGenericSuperclass()).getActualTypeArguments()[0];
+        }
         return this.modelClazz;
     }
 

@@ -9,6 +9,7 @@ import com.colodoo.framework.easyui.Page;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Example;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -33,16 +34,18 @@ public class MenuService {
     }
 
     public PageInfo getMenuList(Page page) {
-        if (page != null)
+        if (page != null) {
             PageHelper.startPage(page.getPage(), page.getRows());
+        }
         List<Menu> list = menuMapper.selectByExample(null);
         PageInfo pageInfo = new PageInfo(list);
         return pageInfo;
     }
 
     public List<Tree> getSubMenuList(String parentMenuId) {
-        if (parentMenuId == null)
+        if (parentMenuId == null) {
             parentMenuId = "";
+        }
         List<Tree> list = new ArrayList<Tree>();
         MenuExample example = new MenuExample();
         example.setOrderByClause("sort");
@@ -76,8 +79,9 @@ public class MenuService {
      * @return
      */
     public List<MenuTreeGrid> getSubMenuTreeGrid(String parentMenuId) {
-        if (parentMenuId == null)
+        if (parentMenuId == null) {
             parentMenuId = "";
+        }
         List<MenuTreeGrid> list = new ArrayList<MenuTreeGrid>();
         MenuExample example = new MenuExample();
         example.createCriteria().andParentMenuIdEqualTo(parentMenuId);
@@ -101,8 +105,9 @@ public class MenuService {
      */
     public PageInfo getSubMenuTreeGrid1(Page page) {
         List<MenuTreeGrid> list = new ArrayList<MenuTreeGrid>();
-        if (page != null)
+        if (page != null) {
             PageHelper.startPage(page.getPage(), page.getRows());
+        }
         MenuExample example = new MenuExample();
         example.setOrderByClause("sort");
         List<Menu> menus = menuMapper.selectByExample(example);
@@ -110,10 +115,12 @@ public class MenuService {
             String menuStr = JSONObject.toJSONString(menu);
             MenuTreeGrid menuTreeGrid = JSONObject.parseObject(menuStr, MenuTreeGrid.class);
             menuTreeGrid.setState("close");
-            if (!menu.getParentMenuId().equals(""))
+            if (!"".equals(menu.getParentMenuId())) {
                 menuTreeGrid.set_parentId(menu.getParentMenuId());
-            else
+            } else {
                 menuTreeGrid.set_parentId(null);
+            }
+            menuTreeGrid.set_parentId(null);
             list.add(menuTreeGrid);
         }
         PageInfo pageInfo = new PageInfo(list);
@@ -122,8 +129,9 @@ public class MenuService {
 
     public int saveMenu(Menu menu) {
         menu.setMenuId(UUID.randomUUID().toString().replace("-", "").toLowerCase());
-        if (menu.getSort() == null)
+        if (menu.getSort() == null) {
             menu.setSort(0);
+        }
         return menuMapper.insert(menu);
     }
 

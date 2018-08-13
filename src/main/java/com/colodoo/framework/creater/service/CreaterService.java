@@ -29,6 +29,20 @@ import java.util.Map;
 @Service
 public class CreaterService {
 
+    /*Mybatis Generator相关*/
+    private final static String MYBATIS_GENERATOR_XML_PATH = "\\src\\main\\resources\\generatorConfig.xml";
+
+    /*路径相关*/
+    private final static String JAVA_ROOT_PATH = "\\src\\main\\java\\";
+
+    /*模板相关*/
+    private final static String TMP_DATAGRID_PATH = "\\src\\main\\resources\\templates\\creater\\datagrid";
+    private final static String TMP_ROOT_PATH = "\\src\\main\\resources\\templates\\manager\\";
+
+
+    /*菜单相关*/
+    private final static String DEFAULT_PARENT_MENU_ID = "349cb244e3e64a0a92a6721879f624d4";
+
     @Autowired
     CreaterMapper sqlCreaterMapper;
     @Autowired
@@ -42,6 +56,7 @@ public class CreaterService {
      * @param tableName
      * @return
      */
+    @Deprecated
     public String getSelectQuery(String tableName) {
         String resultSql = "";
         resultSql += "select ";
@@ -77,6 +92,7 @@ public class CreaterService {
      * @throws IOException
      * @throws TemplateException
      */
+    @Deprecated
     public String getSelectQueryByTemplate(String tableName) throws IOException, TemplateException {
         String resultStr = "";
         Configuration configuration = new Configuration();
@@ -103,7 +119,7 @@ public class CreaterService {
         try {
             List<String> warnings = new ArrayList<String>();
             boolean overwrite = true;
-            File configFile = new File(createrCfg.getSrcPath() + "\\src\\main\\resources\\generatorConfig.xml");
+            File configFile = new File(createrCfg.getSrcPath() + MYBATIS_GENERATOR_XML_PATH);
             ConfigurationParser cp = new ConfigurationParser(warnings);
             org.mybatis.generator.config.Configuration config = cp.parseConfiguration(configFile);
             for (Context ctx : config.getContexts()) {
@@ -136,14 +152,16 @@ public class CreaterService {
 
             // 生成成功以后对model中的文件进行二次处理
             // 处理时间格式化问题
-            String modelFileStr = createrCfg.getSrcPath() + "\\src\\main\\java\\" + mybatisParm.getPackageName().replace(".", "\\") + "\\model\\" + StringUtil.upperCase(StringUtil.underlineToCamel(mybatisParm.getTableName())) + ".java";
+            String modelFileStr = createrCfg.getSrcPath() + JAVA_ROOT_PATH + mybatisParm.getPackageName().replace(".", "\\") + "\\model\\" + StringUtil.upperCase(StringUtil.underlineToCamel(mybatisParm.getTableName())) + ".java";
             File modelFile = new File(modelFileStr);
             FileReader fr = new FileReader(modelFile);
             BufferedReader br = new BufferedReader(fr);
             String str = null;
             String rs = "";
             while ((str = br.readLine()) != null) {
-                if (str == null) continue;
+                if (str == null) {
+                    continue;
+                }
                 if (str.contains("package")) {
                     str += "\n" + "import org.springframework.format.annotation.DateTimeFormat;";
                 }
@@ -170,10 +188,11 @@ public class CreaterService {
     public String createActionString(BaseParm actionParm) throws IOException, TemplateException {
         String resultStr = "";
         StringWriter writer = new StringWriter();
-        String resultDirStr = createrCfg.getSrcPath() + "\\src\\main\\java\\" + actionParm.getPackageName().replace(".", "\\") + "\\action";
+        String resultDirStr = createrCfg.getSrcPath() + JAVA_ROOT_PATH + actionParm.getPackageName().replace(".", "\\") + "\\action";
         File resultDir = new File(resultDirStr);
-        if (!resultDir.exists())
+        if (!resultDir.exists()) {
             resultDir.mkdir();
+        }
         String targetFileName = StringUtil.upperCase(StringUtil.underlineToCamel(actionParm.getTableName())) + "Action.java";
         Configuration configuration = new Configuration();
         File dir = new File("src\\main\\resources\\creater");
@@ -197,10 +216,11 @@ public class CreaterService {
     public String createServiceString(BaseParm serviceParm) throws IOException, TemplateException {
         String resultStr = "";
         StringWriter writer = new StringWriter();
-        String resultDirStr = createrCfg.getSrcPath() + "\\src\\main\\java\\" + serviceParm.getPackageName().replace(".", "\\") + "\\service";
+        String resultDirStr = createrCfg.getSrcPath() + JAVA_ROOT_PATH + serviceParm.getPackageName().replace(".", "\\") + "\\service";
         File resultDir = new File(resultDirStr);
-        if (!resultDir.exists())
+        if (!resultDir.exists()) {
             resultDir.mkdir();
+        }
         String targetFileName = StringUtil.upperCase(StringUtil.underlineToCamel(serviceParm.getTableName())) + "Service.java";
         Configuration configuration = new Configuration();
         File dir = new File("src\\main\\resources\\creater");
@@ -242,11 +262,12 @@ public class CreaterService {
         paramMap.put("menuName", menuName);
         paramMap.put("menuTitle", menuTitle);
         Configuration configuration = new Configuration();
-        String resultDirStr = createrCfg.getSrcPath() + "\\src\\main\\resources\\templates\\manager\\" + StringUtil.underlineToCamel(tableName);
+        String resultDirStr = createrCfg.getSrcPath() + TMP_ROOT_PATH + StringUtil.underlineToCamel(tableName);
         File resultDir = new File(resultDirStr);
-        if (!resultDir.exists())
+        if (!resultDir.exists()) {
             resultDir.mkdir();
-        File dir = new File(createrCfg.getSrcPath() + "\\src\\main\\resources\\templates\\creater\\datagrid");
+        }
+        File dir = new File(createrCfg.getSrcPath() + TMP_DATAGRID_PATH);
         configuration.setDirectoryForTemplateLoading(dir);
         configuration.setObjectWrapper(new DefaultObjectWrapper());
         configuration.setDefaultEncoding("UTF-8");
@@ -260,7 +281,7 @@ public class CreaterService {
             } else {
                 column.setColumnType("easyui-textbox");
             }
-            if (column.getColumnKey().equals("PRI")) {
+            if ("PRI".equals(column.getColumnKey())) {
                 paramMap.put("PK", column.get_columnName());
             }
         }
@@ -273,7 +294,7 @@ public class CreaterService {
         Menu menu = new Menu();
         menu.setMenuName(menuTitle);
         menu.setMenuUrl(StringUtil.underlineToCamel(tableName) + "/" + StringUtil.underlineToCamel(tableName) + "Manager");
-        menu.setParentMenuId("349cb244e3e64a0a92a6721879f624d4");
+        menu.setParentMenuId(DEFAULT_PARENT_MENU_ID);
         menuService.saveMenu(menu);
         return writer.toString();
     }
@@ -286,6 +307,7 @@ public class CreaterService {
      * @throws IOException
      * @throws TemplateException
      */
+    @Deprecated
     public String createModelString(String tableName) throws IOException, TemplateException {
         String resultStr = "";
         Configuration configuration = new Configuration();
@@ -298,12 +320,15 @@ public class CreaterService {
         List<Column> columns = sqlCreaterMapper.getColumns(tableName);
         for (Column column : columns) {
             String columnType = column.getColumnType();
-            if (columnType.contains("varchar"))
+            if (columnType.contains("varchar")) {
                 column.setColumnType("String");
-            if (columnType.contains("datetime"))
+            }
+            if (columnType.contains("datetime")) {
                 column.setColumnType("Date");
-            if (columnType.contains("int"))
+            }
+            if (columnType.contains("int")) {
                 column.setColumnType("int");
+            }
             column.set_columnName(StringUtil.underlineToCamel(column.getColumnName()));
         }
         paramMap.put("packageName", "com.colodoo");

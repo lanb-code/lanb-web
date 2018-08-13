@@ -18,8 +18,6 @@ public class CodeTypeService {
 
     public int save(CodeType model) {
     model.setCodeTypeId(StringUtil.uuid());
-        // model.setCreateDate(new Date());
-        // model.setLastDate(new Date());
         return codeTypeMapper.insert(model);
     }
 

@@ -31,8 +31,6 @@ public class TestService extends BaseService<Test> {
     public int saveTest(Test model) {
         int ret = Contants.CODE_FAILED;
         model.setTestId(uuid());
-        // model.setCreateDate(new Date());
-        // model.setLastDate(new Date());
         try {
             ret = this.insert(model);
         } catch (DAOException e) {

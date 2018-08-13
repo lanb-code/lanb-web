@@ -13,6 +13,7 @@ import java.util.List;
 @Slf4j
 public class OverIsMergeablePlugin extends PluginAdapter {
 
+    @Override
     public boolean validate(List<String> list) {
         return true;
     }

@@ -7,13 +7,14 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class StringUtil {
-    public static final char UNDERLINE = '_';
+    private static final char UNDERLINE = '_';
+    private static Pattern MC = Pattern.compile("_");
 
     /**
      * 驼峰格式字符串转换为下划线格式字符串
      *
-     * @param param
-     * @return
+     * @param param 驼峰格式字符串
+     * @return 转为下划线字符串
      */
     public static String camelToUnderline(String param) {
         if (param == null || "".equals(param.trim())) {
@@ -36,8 +37,8 @@ public class StringUtil {
     /**
      * 下划线格式字符串转换为驼峰格式字符串
      *
-     * @param param
-     * @return
+     * @param param 下划线字符串
+     * @return 驼峰格式字符串
      */
     public static String underlineToCamel(String param) {
         if (param == null || "".equals(param.trim())) {
@@ -61,15 +62,15 @@ public class StringUtil {
     /**
      * 下划线格式字符串转换为驼峰格式字符串2
      *
-     * @param param
-     * @return
+     * @param param 下划线字符串
+     * @return 驼峰字符串
      */
     public static String underlineToCamel2(String param) {
         if (param == null || "".equals(param.trim())) {
             return "";
         }
         StringBuilder sb = new StringBuilder(param);
-        Matcher mc = Pattern.compile("_").matcher(param);
+        Matcher mc = MC.matcher(param);
         int i = 0;
         while (mc.find()) {
             int position = mc.end() - (i++);
@@ -81,7 +82,7 @@ public class StringUtil {
     /**
      * 取UUID
      *
-     * @return
+     * @return uuid字符串
      */
     public static String uuid() {
         return UUID.randomUUID().toString().replace("-", "").toLowerCase();
@@ -90,8 +91,8 @@ public class StringUtil {
     /**
      * 首字母大写
      *
-     * @param str
-     * @return
+     * @param str 任意字符串
+     * @return 首字母为大写的字符串
      */
     public static String upperCase(String str) {
         return str.substring(0, 1).toUpperCase() + str.substring(1);
@@ -100,16 +101,17 @@ public class StringUtil {
     /**
      * 首字母小写
      *
-     * @param str
-     * @return
+     * @param str 任意字符串
+     * @return 首字母小写字符串
      */
     public static String lowerCase(String str) {
         return str.substring(0, 1).toLowerCase() + str.substring(1);
     }
+
     /**
      * 取当前时间格式化字符串
      *
-     * @return
+     * @return yyyy-MM-dd HH:mm:ss 格式化后的当前时间
      */
     public static String currTime() {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");

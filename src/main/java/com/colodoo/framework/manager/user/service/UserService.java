@@ -50,10 +50,11 @@ public class UserService {
     public boolean loginCheck(User model) {
         //是否存在空参数
         if (model.getUserName() == null
-                || model.getUserName().equals("")
+                || "".equals(model.getUserName())
                 || model.getPassword() == null
-                || model.getPassword().equals(""))
+                || "".equals(model.getPassword())) {
             return false;
+        }
         UserExample example = new UserExample();
         example.createCriteria()
                 .andUserNameEqualTo(model.getUserName())
@@ -76,8 +77,9 @@ public class UserService {
         if (users.size() == 1) {
             model = users.get(0);
             //如果已经锁号,直接停止所有操作
-            if (model.getEnable().equals(Contants.FALSE))
+            if (model.getEnable().equals(Contants.FALSE)) {
                 return;
+            }
             //如果超出限制次数,则锁号
             if (model.getTryCount() >= 5) {
                 model.setEnable(Contants.FALSE);
@@ -93,16 +95,18 @@ public class UserService {
     public boolean register(User model) {
         //先判断信息的完整性
         if (model.getUserName() == null
-                || model.getUserName().equals("")
+                || "".equals(model.getUserName())
                 || model.getPassword() == null
-                || model.getPassword().equals(""))
+                || "".equals(model.getPassword())) {
             return false;
+        }
         //防止恶意注册,进行数据的二次验证
         //再进行操作
         model.setEnable(Contants.TRUE);
         model.setTryCount(0);
-        if (save(model) > 0)
+        if (save(model) > 0) {
             return true;
+        }
         return false;
     }
 }

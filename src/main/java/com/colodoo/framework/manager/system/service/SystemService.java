@@ -18,8 +18,6 @@ public class SystemService {
 
     public int save(System model) {
     model.setSystemId(StringUtil.uuid());
-        // model.setCreateDate(new Date());
-        // model.setLastDate(new Date());
         return systemMapper.insert(model);
     }
 

@@ -30,7 +30,7 @@ public class MenuAction {
     @RequestMapping(value = "/getRootMenuList")
     @ResponseBody
     public Map getRootMenuList(Page page) {
-        Map rspMap = new HashMap();
+        Map rspMap = new HashMap(2);
         PageInfo pageInfo = menuService.getRootMenuList(page);
         rspMap.put("rows", pageInfo.getList());
         rspMap.put("total", pageInfo.getTotal());
@@ -40,7 +40,7 @@ public class MenuAction {
     @RequestMapping(value = "/getMenuList")
     @ResponseBody
     public Map getMenuList(Page page) {
-        Map rspMap = new HashMap();
+        Map rspMap = new HashMap(2);
         PageInfo pageInfo = menuService.getMenuList(page);
         rspMap.put("rows", pageInfo.getList());
         rspMap.put("total", pageInfo.getTotal());
@@ -56,7 +56,7 @@ public class MenuAction {
     @RequestMapping(value = "/getMenuTreeGrid")
     @ResponseBody
     public Map getMenuTreeGrid() {
-        Map rspMap = new HashMap();
+        Map rspMap = new HashMap(2);
         PageInfo pageInfo = menuService.getMenuTreeGrid();
         rspMap.put("rows", pageInfo.getList());
         rspMap.put("total", pageInfo.getTotal());
@@ -72,7 +72,7 @@ public class MenuAction {
     @RequestMapping(value = "/getSubMenuTreeGrid1")
     @ResponseBody
     public Map getSubMenuTreeGrid1(Page page) {
-        Map rspMap = new HashMap();
+        Map rspMap = new HashMap(2);
         PageInfo pageInfo = menuService.getSubMenuTreeGrid1(page);
         rspMap.put("rows", pageInfo.getList());
         rspMap.put("total", pageInfo.getTotal());
@@ -94,7 +94,7 @@ public class MenuAction {
     @RequestMapping(value = "/destroyMenu")
     @ResponseBody
     public Map destroyMenu(Menu menu) {
-        HashMap result = new HashMap();
+        HashMap result = new HashMap(1);
         if (menuService.destroyMenu(menu) >= 1) {
             result.put("success", true);
         } else {
