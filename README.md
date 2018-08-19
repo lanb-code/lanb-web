@@ -40,9 +40,6 @@
   
 如果你对该框架有自己的- [想法](https://github.com/lanb-code/lanb-web/issues)，那么可以在这里提出。  
   
-我们希望有一个活跃的社区。
-
-
 ## 社区  
   
 - [组织](https://github.com/lanb-code)  
