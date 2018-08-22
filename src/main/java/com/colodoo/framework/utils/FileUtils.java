@@ -4,7 +4,9 @@ import java.io.File;
 import java.io.FileOutputStream;
 
 /**
- * 文件上传下载和其他操作
+ * @author colodoo
+ * @date 2017/08/14 21:50
+ * @description 文件上传下载和其他操作
  */
 public class FileUtils {
 

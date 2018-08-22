@@ -6,6 +6,11 @@ import java.util.UUID;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/**
+ * @author colodoo
+ * @date 218/08/14 21:49
+ * @description 字符串操作工具类
+ */
 public class StringUtil {
     private static final char UNDERLINE = '_';
     private static Pattern MC = Pattern.compile("_");

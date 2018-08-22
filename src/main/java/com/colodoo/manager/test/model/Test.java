@@ -2,13 +2,14 @@ package com.colodoo.manager.test.model;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
+import java.sql.Timestamp;
 import java.util.Date;
 
 public class Test {
     private String testId;
     private String testName;
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    private Date createTime;
+    private Timestamp createTime;
 
     public String getTestId() {
         return testId;
@@ -26,11 +27,11 @@ public class Test {
         this.testName = testName == null ? null : testName.trim();
     }
 
-    public Date getCreateTime() {
+    public Timestamp getCreateTime() {
         return createTime;
     }
 
-    public void setCreateTime(Date createTime) {
+    public void setCreateTime(Timestamp createTime) {
         this.createTime = createTime;
     }
 }

@@ -5,20 +5,22 @@ import com.colodoo.framework.redis.RedisService;
 import com.colodoo.framework.utils.SpringContextsUtil;
 import com.colodoo.framework.utils.StringUtil;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.ibatis.session.SqlSession;
+import org.apache.ibatis.session.SqlSessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.lang.invoke.SerializedLambda;
 import java.lang.reflect.Method;
 import java.lang.reflect.ParameterizedType;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
- * @Author: colodoo
- * @Date: 2018/8/7 22:49
- * @Description:
- * 
- * 1; 继承的条件是你的*Mapper.xml和Server层文件在同一包下
+ * @author colodoo
+ * @date 2018/8/7 22:49
+ * @description 1; 继承的条件是你的*Mapper.xml和Server层文件在同一包下
  * 2; T为传递的实体类
  * 3; 编写的初衷是为了简化DAO层的代码量
  */
@@ -28,6 +30,9 @@ public abstract class BaseService<M> {
 
     @Autowired
     private RedisService redis;
+
+    @Autowired
+    private SqlSessionFactory sessionFactory;
 
     /*抽象方法相关*/
     private static final String MAPPER_SUFFIX = "Mapper";
@@ -39,6 +44,9 @@ public abstract class BaseService<M> {
     private static final String MAPPER_UPDATE = "updateByPrimaryKeySelective";
     private static final String MAPPER_SELECT_BY_EXAMPLE = "selectByExample";
     private static final String MAPPER_SELECT_BY_PK = "selectByPrimaryKey";
+
+    private static final String REALTION_MAPPER = "RealtionMapper";
+
     //private static final String MAPPER_CREATE_CRITERIA = "createCriteria";
 
     //mapper类
@@ -201,6 +209,19 @@ public abstract class BaseService<M> {
         return this.find(null);
     }
 
+    /*复杂关联查询*/
+
+    /**
+     * 根据id查询
+     * @param id
+     * @param vo
+     * @return
+     */
+    public List<Object> find(String id, Object vo) {
+        List<Object> list = new ArrayList<>();
+        return list;
+    }
+
     /*公共部分*/
 
     /**
@@ -287,6 +308,15 @@ public abstract class BaseService<M> {
             log.error(e.getMessage());
         }
         return this.exampleClazz;
+    }
+
+    /**
+     * 取当前Mybatis会话
+     *
+     * @return
+     */
+    public SqlSession getSession() {
+        return this.sessionFactory.openSession();
     }
 
     /*其他方法*/

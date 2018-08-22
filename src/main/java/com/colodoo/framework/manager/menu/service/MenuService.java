@@ -120,7 +120,6 @@ public class MenuService {
             } else {
                 menuTreeGrid.set_parentId(null);
             }
-            menuTreeGrid.set_parentId(null);
             list.add(menuTreeGrid);
         }
         PageInfo pageInfo = new PageInfo(list);

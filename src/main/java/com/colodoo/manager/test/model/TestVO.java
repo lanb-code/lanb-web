@@ -4,9 +4,9 @@ import java.io.Serializable;
 import java.util.Date;
 
 /**
- * @Author: colodoo
- * @Date: 2018/8/12 0:11
- * @Description:
+ * @author colodoo
+ * @date 2018/8/12 0:11
+ * @description 
  */
 public class TestVO extends Test implements Serializable {
 

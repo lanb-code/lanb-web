@@ -6,13 +6,8 @@ import org.springframework.stereotype.Component;
 @Component
 public class InitializingBeanHandler implements InitializingBean {
 
-//    @Autowired
-//    RedisService redisService;
-//    @Autowired
-//    MenuService menuService;
-
     @Override
     public void afterPropertiesSet() throws Exception {
-        //redisService.setObj("menuList", menuService.getSubMenuTreeGrid(""));
+        // do something...
     }
 }

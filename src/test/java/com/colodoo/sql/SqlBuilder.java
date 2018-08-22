@@ -4,9 +4,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.jdbc.SQL;
 
 /**
- * @Author: colodoo
- * @Date: 2018/8/12 3:08
- * @Description:
+ * @author colodoo
+ * @date 2018/8/12 3:08
+ * @description
  */
 @Slf4j
 public class SqlBuilder {

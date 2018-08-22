@@ -158,6 +158,7 @@ public class CreaterService {
             BufferedReader br = new BufferedReader(fr);
             String str = null;
             String rs = "";
+//            StringBuilder result
             while ((str = br.readLine()) != null) {
                 if (str == null) {
                     continue;
@@ -256,8 +257,10 @@ public class CreaterService {
         Map<String, Object> paramMap = new HashMap<String, Object>();
         String tableName = datagridParm.getTableName();
 //        tableName = StringUtil.underlineToCamel(tableName);//表名
-        String menuName = datagridParm.getMenuName();//功能名
-        String menuTitle = datagridParm.getMenuTitle();//功能标题
+        //功能名
+        String menuName = datagridParm.getMenuName();
+        //功能标题
+        String menuTitle = datagridParm.getMenuTitle();
         paramMap.put("tableName", StringUtil.underlineToCamel(tableName));
         paramMap.put("menuName", menuName);
         paramMap.put("menuTitle", menuTitle);

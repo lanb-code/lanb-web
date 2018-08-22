@@ -4,7 +4,9 @@ package com.colodoo.framework.creater.model;
 import java.io.Serializable;
 
 /**
- * 表字段-实体类
+ * @author colodoo
+ * @date 2018/08/14 22:05
+ * @description 表字段-实体类
  */
 public class Column implements Serializable {
 

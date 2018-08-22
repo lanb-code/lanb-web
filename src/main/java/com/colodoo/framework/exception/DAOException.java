@@ -1,9 +1,9 @@
 package com.colodoo.framework.exception;
 
 /**
- * @Author: colodoo
- * @Date: 2018/8/11 23:46
- * @Description:
+ * @author colodoo
+ * @date 2018/8/11 23:46
+ * @description
  */
 public class DAOException extends Exception {
 

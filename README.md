@@ -38,7 +38,7 @@
   
 本框架还存在很多很多的问题。
   
-如果你对该框架有自己的- [想法](https://github.com/lanb-code/lanb-web/issues)，那么可以在这里提出。  
+如果你对该框架有自己的[想法](https://github.com/lanb-code/lanb-web/issues)，那么可以在这里提出。  
   
 ## 社区  
   

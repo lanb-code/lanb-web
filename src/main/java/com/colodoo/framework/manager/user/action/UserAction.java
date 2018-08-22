@@ -36,14 +36,16 @@ public class UserAction {
     public Map loginCheck(User model, HttpSession session) {
         Map map = new HashMap();
         Object userName = session.getAttribute("userName");
-        if (userName != null) {//已经登录
+        //已经登录
+        if (userName != null) {
             map.put("success", true);
             model.setPassword(null);
             model.setUserName(userName.toString());
             map.put("user", model);
             map.put("msg", "您已经登录!");
         } else {
-            if (userService.loginCheck(model)) {//登录成功
+            //登录成功
+            if (userService.loginCheck(model)) {
                 map.put("success", true);
                 map.put("msg", "登录成功!");
                 model.setPassword(null);

@@ -14,9 +14,9 @@ import java.util.Map;
 import java.util.List;
 
 /**
-* @author: colodoo
-* @Date: ${.now?date} ${.now?time}
-* @description:
+* @author colodoo
+* @date ${.now?date} ${.now?time}
+* @description
 */
 @Controller
 @RequestMapping(value = "/${tableName}")

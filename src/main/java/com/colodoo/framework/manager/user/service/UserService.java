@@ -81,7 +81,7 @@ public class UserService {
                 return;
             }
             //如果超出限制次数,则锁号
-            if (model.getTryCount() >= 5) {
+            if (model.getTryCount() >= Contants.MAX_LOGIN_TRY_COUNT) {
                 model.setEnable(Contants.FALSE);
                 model.setTryCount(0);
                 userMapper.updateByPrimaryKeySelective(model);

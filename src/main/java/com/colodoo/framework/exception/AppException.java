@@ -1,9 +1,9 @@
 package com.colodoo.framework.exception;
 
 /**
- * @Author: colodoo
- * @Date: 2018/8/10 22:56
- * @Description:
+ * @author colodoo
+ * @date 2018/8/10 22:56
+ * @description
  */
 public class AppException extends Exception {
 
