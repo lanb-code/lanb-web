@@ -24,7 +24,7 @@
         <h1 class="logo"><a href="#"><i class="iconfont icon-saomiao"></i>&nbsp;LanbWeb</a></h1>
         <div class="toolbar">
             <span><a href="#"><i class="iconfont icon-yonghu"></i>&nbsp;用户</a></span>
-            <span><a href="#"><i class="iconfont icon-tuichu"></i>&nbsp;退出</a></span>
+            <span><a href="#" onclick="window.location.href = '/user/login';"><i class="iconfont icon-tuichu"></i>&nbsp;退出</a></span>
         </div>
     </div>
     <div data-options="region:'south',split:true" style="height:50px;"></div>
