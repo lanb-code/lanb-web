@@ -19,8 +19,7 @@ public interface CreaterMapper {
             "FROM\n" +
             "\tinformation_schema.COLUMNS " +
             "WHERE\n" +
-            "\ttable_name = #{tableName} " +
-            "and ")
+            "\ttable_name = #{tableName}")
     public List<Column> getColumns(@Param("tableName") String tableName);
 
 }

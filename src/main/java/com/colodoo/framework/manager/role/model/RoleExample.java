@@ -385,73 +385,63 @@ public class RoleExample {
             return (Criteria) this;
         }
 
-        public Criteria andSortIdIsNull() {
-            addCriterion("sort_id is null");
+        public Criteria andSortIsNull() {
+            addCriterion("sort is null");
             return (Criteria) this;
         }
 
-        public Criteria andSortIdIsNotNull() {
-            addCriterion("sort_id is not null");
+        public Criteria andSortIsNotNull() {
+            addCriterion("sort is not null");
             return (Criteria) this;
         }
 
-        public Criteria andSortIdEqualTo(String value) {
-            addCriterion("sort_id =", value, "sortId");
+        public Criteria andSortEqualTo(Integer value) {
+            addCriterion("sort =", value, "sort");
             return (Criteria) this;
         }
 
-        public Criteria andSortIdNotEqualTo(String value) {
-            addCriterion("sort_id <>", value, "sortId");
+        public Criteria andSortNotEqualTo(Integer value) {
+            addCriterion("sort <>", value, "sort");
             return (Criteria) this;
         }
 
-        public Criteria andSortIdGreaterThan(String value) {
-            addCriterion("sort_id >", value, "sortId");
+        public Criteria andSortGreaterThan(Integer value) {
+            addCriterion("sort >", value, "sort");
             return (Criteria) this;
         }
 
-        public Criteria andSortIdGreaterThanOrEqualTo(String value) {
-            addCriterion("sort_id >=", value, "sortId");
+        public Criteria andSortGreaterThanOrEqualTo(Integer value) {
+            addCriterion("sort >=", value, "sort");
             return (Criteria) this;
         }
 
-        public Criteria andSortIdLessThan(String value) {
-            addCriterion("sort_id <", value, "sortId");
+        public Criteria andSortLessThan(Integer value) {
+            addCriterion("sort <", value, "sort");
             return (Criteria) this;
         }
 
-        public Criteria andSortIdLessThanOrEqualTo(String value) {
-            addCriterion("sort_id <=", value, "sortId");
+        public Criteria andSortLessThanOrEqualTo(Integer value) {
+            addCriterion("sort <=", value, "sort");
             return (Criteria) this;
         }
 
-        public Criteria andSortIdLike(String value) {
-            addCriterion("sort_id like", value, "sortId");
+        public Criteria andSortIn(List<Integer> values) {
+            addCriterion("sort in", values, "sort");
             return (Criteria) this;
         }
 
-        public Criteria andSortIdNotLike(String value) {
-            addCriterion("sort_id not like", value, "sortId");
+        public Criteria andSortNotIn(List<Integer> values) {
+            addCriterion("sort not in", values, "sort");
             return (Criteria) this;
         }
 
-        public Criteria andSortIdIn(List<String> values) {
-            addCriterion("sort_id in", values, "sortId");
+        public Criteria andSortBetween(Integer value1, Integer value2) {
+            addCriterion("sort between", value1, value2, "sort");
             return (Criteria) this;
         }
 
-        public Criteria andSortIdNotIn(List<String> values) {
-            addCriterion("sort_id not in", values, "sortId");
-            return (Criteria) this;
-        }
-
-        public Criteria andSortIdBetween(String value1, String value2) {
-            addCriterion("sort_id between", value1, value2, "sortId");
-            return (Criteria) this;
-        }
-
-        public Criteria andSortIdNotBetween(String value1, String value2) {
-            addCriterion("sort_id not between", value1, value2, "sortId");
+        public Criteria andSortNotBetween(Integer value1, Integer value2) {
+            addCriterion("sort not between", value1, value2, "sort");
             return (Criteria) this;
         }
 

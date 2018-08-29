@@ -44,7 +44,7 @@ public class CreaterService {
     private final static String DEFAULT_PARENT_MENU_ID = "349cb244e3e64a0a92a6721879f624d4";
 
     @Autowired
-    CreaterMapper sqlCreaterMapper;
+    CreaterMapper createrMapper;
     @Autowired
     CreaterCfg createrCfg;
     @Autowired
@@ -60,7 +60,7 @@ public class CreaterService {
     public String getSelectQuery(String tableName) {
         String resultSql = "";
         resultSql += "select ";
-        List<Column> columns = sqlCreaterMapper.getColumns(tableName);
+        List<Column> columns = createrMapper.getColumns(tableName);
 
         for (int i = 0; i < columns.size(); i++) {
             Column column = columns.get(i);
@@ -102,7 +102,7 @@ public class CreaterService {
         configuration.setDefaultEncoding("UTF-8");
         Template template = configuration.getTemplate("select.ftl");
         Map<String, Object> paramMap = new HashMap<String, Object>();
-        List<Column> columns = sqlCreaterMapper.getColumns(tableName);
+        List<Column> columns = createrMapper.getColumns(tableName);
         for (Column column : columns) {
             column.set_columnName(StringUtil.underlineToCamel(column.getColumnName()));
         }
@@ -117,7 +117,7 @@ public class CreaterService {
     public String createMybatisString(BaseParm mybatisParm) {
         String result = "";
         try {
-            List<String> warnings = new ArrayList<String>();
+            List<String> warnings = new ArrayList<>();
             boolean overwrite = true;
             File configFile = new File(createrCfg.getSrcPath() + MYBATIS_GENERATOR_XML_PATH);
             ConfigurationParser cp = new ConfigurationParser(warnings);
@@ -158,16 +158,17 @@ public class CreaterService {
             BufferedReader br = new BufferedReader(fr);
             String str = null;
             String rs = "";
-//            StringBuilder result
+            //
             while ((str = br.readLine()) != null) {
                 if (str == null) {
                     continue;
                 }
                 if (str.contains("package")) {
                     str += "\n" + "import org.springframework.format.annotation.DateTimeFormat;";
+                    str += "\n" + "import com.fasterxml.jackson.annotation.JsonFormat;";
                 }
                 if (str.contains("private Date ")) {
-                    str = "@DateTimeFormat(pattern = \"yyyy-MM-dd HH:mm:ss\")\n" + str;
+                    str = "@JsonFormat(pattern = \"yyyy-MM-dd HH:mm:ss\", timezone = \"GMT+8\")\n@DateTimeFormat(pattern = \"yyyy-MM-dd HH:mm:ss\")\n" + str;
                 }
                 rs += str;
             }
@@ -195,10 +196,10 @@ public class CreaterService {
             resultDir.mkdir();
         }
         String targetFileName = StringUtil.upperCase(StringUtil.underlineToCamel(actionParm.getTableName())) + "Action.java";
-        Configuration configuration = new Configuration();
+        Configuration configuration = new Configuration(Configuration.DEFAULT_INCOMPATIBLE_IMPROVEMENTS);
         File dir = new File("src\\main\\resources\\creater");
         configuration.setDirectoryForTemplateLoading(dir);
-        configuration.setObjectWrapper(new DefaultObjectWrapper());
+        configuration.setObjectWrapper(new DefaultObjectWrapper(Configuration.DEFAULT_INCOMPATIBLE_IMPROVEMENTS));
         configuration.setDefaultEncoding("UTF-8");
         Template template = configuration.getTemplate("action.ftl");
         Map<String, Object> paramMap = new HashMap<String, Object>();
@@ -223,10 +224,10 @@ public class CreaterService {
             resultDir.mkdir();
         }
         String targetFileName = StringUtil.upperCase(StringUtil.underlineToCamel(serviceParm.getTableName())) + "Service.java";
-        Configuration configuration = new Configuration();
+        Configuration configuration = new Configuration(Configuration.DEFAULT_INCOMPATIBLE_IMPROVEMENTS);
         File dir = new File("src\\main\\resources\\creater");
         configuration.setDirectoryForTemplateLoading(dir);
-        configuration.setObjectWrapper(new DefaultObjectWrapper());
+        configuration.setObjectWrapper(new DefaultObjectWrapper(Configuration.DEFAULT_INCOMPATIBLE_IMPROVEMENTS));
         configuration.setDefaultEncoding("UTF-8");
         Template template = configuration.getTemplate("service.ftl");
         Map<String, Object> paramMap = new HashMap<String, Object>();
@@ -238,7 +239,6 @@ public class CreaterService {
         resultStr = writer.toString();
         writer.close();
         writer1.close();
-        System.out.println(resultStr);
         return resultStr;
     }
 
@@ -264,7 +264,7 @@ public class CreaterService {
         paramMap.put("tableName", StringUtil.underlineToCamel(tableName));
         paramMap.put("menuName", menuName);
         paramMap.put("menuTitle", menuTitle);
-        Configuration configuration = new Configuration();
+        Configuration configuration = new Configuration(Configuration.DEFAULT_INCOMPATIBLE_IMPROVEMENTS);
         String resultDirStr = createrCfg.getSrcPath() + TMP_ROOT_PATH + StringUtil.underlineToCamel(tableName);
         File resultDir = new File(resultDirStr);
         if (!resultDir.exists()) {
@@ -272,10 +272,10 @@ public class CreaterService {
         }
         File dir = new File(createrCfg.getSrcPath() + TMP_DATAGRID_PATH);
         configuration.setDirectoryForTemplateLoading(dir);
-        configuration.setObjectWrapper(new DefaultObjectWrapper());
+        configuration.setObjectWrapper(new DefaultObjectWrapper(Configuration.DEFAULT_INCOMPATIBLE_IMPROVEMENTS));
         configuration.setDefaultEncoding("UTF-8");
         Template template = configuration.getTemplate("datagrid-base-crud-js.ftl");
-        List<Column> columns = sqlCreaterMapper.getColumns(tableName);
+        List<Column> columns = createrMapper.getColumns(tableName);
         for (Column column : columns) {
             column.set_columnName(StringUtil.underlineToCamel(column.getColumnName()));
             String columnType = column.getColumnType();
@@ -294,6 +294,8 @@ public class CreaterService {
         Writer writer1 = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(new File(resultDirStr + "\\" + targetFileName)), "UTF-8"));
         template.process(paramMap, writer);
         template.process(paramMap, writer1);
+
+        // 创建功能菜单
         Menu menu = new Menu();
         menu.setMenuName(menuTitle);
         menu.setMenuUrl(StringUtil.underlineToCamel(tableName) + "/" + StringUtil.underlineToCamel(tableName) + "Manager");
@@ -320,7 +322,7 @@ public class CreaterService {
         configuration.setDefaultEncoding("UTF-8");
         Template template = configuration.getTemplate("model.ftl");
         Map<String, Object> paramMap = new HashMap<String, Object>();
-        List<Column> columns = sqlCreaterMapper.getColumns(tableName);
+        List<Column> columns = createrMapper.getColumns(tableName);
         for (Column column : columns) {
             String columnType = column.getColumnType();
             if (columnType.contains("varchar")) {

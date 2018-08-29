@@ -6,7 +6,7 @@
     <result column="role_name" jdbcType="VARCHAR" property="roleName" />
     <result column="options" jdbcType="VARCHAR" property="options" />
     <result column="parent_role_id" jdbcType="VARCHAR" property="parentRoleId" />
-    <result column="sort_id" jdbcType="VARCHAR" property="sortId" />
+    <result column="sort" jdbcType="INTEGER" property="sort" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
   </resultMap>
   <sql id="Example_Where_Clause">
@@ -68,7 +68,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    role_id, role_name, options, parent_role_id, sort_id, create_time
+    role_id, role_name, options, parent_role_id, sort, create_time
   </sql>
   <select id="selectByExample" parameterType="com.colodoo.framework.manager.role.model.RoleExample" resultMap="BaseResultMap">
     select
@@ -102,10 +102,10 @@
   </delete>
   <insert id="insert" parameterType="com.colodoo.framework.manager.role.model.Role">
     insert into role (role_id, role_name, options, 
-      parent_role_id, sort_id, create_time
+      parent_role_id, sort, create_time
       )
     values (#{roleId,jdbcType=VARCHAR}, #{roleName,jdbcType=VARCHAR}, #{options,jdbcType=VARCHAR}, 
-      #{parentRoleId,jdbcType=VARCHAR}, #{sortId,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}
+      #{parentRoleId,jdbcType=VARCHAR}, #{sort,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}
       )
   </insert>
   <insert id="insertSelective" parameterType="com.colodoo.framework.manager.role.model.Role">
@@ -123,8 +123,8 @@
       <if test="parentRoleId != null">
         parent_role_id,
       </if>
-      <if test="sortId != null">
-        sort_id,
+      <if test="sort != null">
+        sort,
       </if>
       <if test="createTime != null">
         create_time,
@@ -143,8 +143,8 @@
       <if test="parentRoleId != null">
         #{parentRoleId,jdbcType=VARCHAR},
       </if>
-      <if test="sortId != null">
-        #{sortId,jdbcType=VARCHAR},
+      <if test="sort != null">
+        #{sort,jdbcType=INTEGER},
       </if>
       <if test="createTime != null">
         #{createTime,jdbcType=TIMESTAMP},
@@ -172,8 +172,8 @@
       <if test="record.parentRoleId != null">
         parent_role_id = #{record.parentRoleId,jdbcType=VARCHAR},
       </if>
-      <if test="record.sortId != null">
-        sort_id = #{record.sortId,jdbcType=VARCHAR},
+      <if test="record.sort != null">
+        sort = #{record.sort,jdbcType=INTEGER},
       </if>
       <if test="record.createTime != null">
         create_time = #{record.createTime,jdbcType=TIMESTAMP},
@@ -189,7 +189,7 @@
       role_name = #{record.roleName,jdbcType=VARCHAR},
       options = #{record.options,jdbcType=VARCHAR},
       parent_role_id = #{record.parentRoleId,jdbcType=VARCHAR},
-      sort_id = #{record.sortId,jdbcType=VARCHAR},
+      sort = #{record.sort,jdbcType=INTEGER},
       create_time = #{record.createTime,jdbcType=TIMESTAMP}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -207,8 +207,8 @@
       <if test="parentRoleId != null">
         parent_role_id = #{parentRoleId,jdbcType=VARCHAR},
       </if>
-      <if test="sortId != null">
-        sort_id = #{sortId,jdbcType=VARCHAR},
+      <if test="sort != null">
+        sort = #{sort,jdbcType=INTEGER},
       </if>
       <if test="createTime != null">
         create_time = #{createTime,jdbcType=TIMESTAMP},
@@ -221,7 +221,7 @@
     set role_name = #{roleName,jdbcType=VARCHAR},
       options = #{options,jdbcType=VARCHAR},
       parent_role_id = #{parentRoleId,jdbcType=VARCHAR},
-      sort_id = #{sortId,jdbcType=VARCHAR},
+      sort = #{sort,jdbcType=INTEGER},
       create_time = #{createTime,jdbcType=TIMESTAMP}
     where role_id = #{roleId,jdbcType=VARCHAR}
   </update>
