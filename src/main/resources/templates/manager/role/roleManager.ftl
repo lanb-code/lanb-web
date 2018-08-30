@@ -13,8 +13,16 @@
         </div>
         <div style="margin-bottom:10px"><input name="options" class="easyui-textbox" label="角色配置项:" style="width:100%">
         </div>
-        <div style="margin-bottom:10px"><input name="parentRoleId" class="easyui-textbox" label="父角色ID:"
-                                               style="width:100%"></div>
+        <div style="margin-bottom:10px">
+            <select name="parentRoleId" class="easyui-combobox"
+                    data-options="
+                    url: '/role/query',
+                    valueField: 'roleId',
+                    textField: 'roleName'"
+                    label="父角色ID:"
+                    style="width:100%">
+            </select>
+        </div>
         <div style="margin-bottom:10px"><input name="sort" class="easyui-textbox" label="排序:" style="width:100%"></div>
         <div style="margin-bottom:10px"><input name="createTime" class="easyui-datetimebox" label="创建时间:"
                                                style="width:100%"></div>

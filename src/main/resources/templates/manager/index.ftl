@@ -35,18 +35,6 @@
     <div data-options="region:'center'" style="width: 100%;">
         <div id="sc-tabs" class="easyui-tabs" fit="true" border="false" plain="true">
             <div title="主页" data-options="selected:true">
-                <#--<div style="width: 100%; height: 80%; margin-bottom: 10px;">-->
-                <#--<#include "scaner/simpleScaner.ftl" />-->
-                <#--</div>-->
-                <#--<div style="width: 100%; height: 80%; margin-bottom: 10px;">-->
-                <#--<#include "scaner/complexScaner.ftl" />-->
-                <#--</div>-->
-                <#--<div style="width: 50%; height: 80%; float: left;">-->
-                <#--<#include "resource/clientMgr.ftl" />-->
-                <#--</div>-->
-                <#--<div style="width: 50%; height: 80%; float: right;">-->
-                <#--<#include "asset/assetSetting.ftl" />-->
-                <#--</div>-->
             </div>
         </div>
     </div>

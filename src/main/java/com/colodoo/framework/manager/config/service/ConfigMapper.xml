@@ -7,6 +7,7 @@
     <result column="config_value" jdbcType="VARCHAR" property="configValue" />
     <result column="sort_no" jdbcType="INTEGER" property="sortNo" />
     <result column="create_date" jdbcType="TIMESTAMP" property="createDate" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -67,7 +68,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    config_id, config_name, config_value, sort_no, create_date
+    config_id, config_name, config_value, sort_no, create_date, remark
   </sql>
   <select id="selectByExample" parameterType="com.colodoo.framework.manager.config.model.ConfigExample" resultMap="BaseResultMap">
     select
@@ -101,9 +102,11 @@
   </delete>
   <insert id="insert" parameterType="com.colodoo.framework.manager.config.model.Config">
     insert into config (config_id, config_name, config_value, 
-      sort_no, create_date)
+      sort_no, create_date, remark
+      )
     values (#{configId,jdbcType=VARCHAR}, #{configName,jdbcType=VARCHAR}, #{configValue,jdbcType=VARCHAR}, 
-      #{sortNo,jdbcType=INTEGER}, #{createDate,jdbcType=TIMESTAMP})
+      #{sortNo,jdbcType=INTEGER}, #{createDate,jdbcType=TIMESTAMP}, #{remark,jdbcType=VARCHAR}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.colodoo.framework.manager.config.model.Config">
     insert into config
@@ -123,6 +126,9 @@
       <if test="createDate != null">
         create_date,
       </if>
+      <if test="remark != null">
+        remark,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="configId != null">
@@ -139,6 +145,9 @@
       </if>
       <if test="createDate != null">
         #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null">
+        #{remark,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -166,6 +175,9 @@
       <if test="record.createDate != null">
         create_date = #{record.createDate,jdbcType=TIMESTAMP},
       </if>
+      <if test="record.remark != null">
+        remark = #{record.remark,jdbcType=VARCHAR},
+      </if>
     </set>
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -177,7 +189,8 @@
       config_name = #{record.configName,jdbcType=VARCHAR},
       config_value = #{record.configValue,jdbcType=VARCHAR},
       sort_no = #{record.sortNo,jdbcType=INTEGER},
-      create_date = #{record.createDate,jdbcType=TIMESTAMP}
+      create_date = #{record.createDate,jdbcType=TIMESTAMP},
+      remark = #{record.remark,jdbcType=VARCHAR}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -197,6 +210,9 @@
       <if test="createDate != null">
         create_date = #{createDate,jdbcType=TIMESTAMP},
       </if>
+      <if test="remark != null">
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
     </set>
     where config_id = #{configId,jdbcType=VARCHAR}
   </update>
@@ -205,7 +221,8 @@
     set config_name = #{configName,jdbcType=VARCHAR},
       config_value = #{configValue,jdbcType=VARCHAR},
       sort_no = #{sortNo,jdbcType=INTEGER},
-      create_date = #{createDate,jdbcType=TIMESTAMP}
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      remark = #{remark,jdbcType=VARCHAR}
     where config_id = #{configId,jdbcType=VARCHAR}
   </update>
 </mapper>
