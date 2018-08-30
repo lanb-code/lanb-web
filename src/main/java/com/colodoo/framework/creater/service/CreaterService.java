@@ -60,7 +60,7 @@ public class CreaterService {
     public String getSelectQuery(String tableName) {
         String resultSql = "";
         resultSql += "select ";
-        List<Column> columns = createrMapper.getColumns(tableName);
+        List<Column> columns = createrMapper.getColumns(tableName, createrCfg.getTableSchema());
 
         for (int i = 0; i < columns.size(); i++) {
             Column column = columns.get(i);
@@ -102,7 +102,7 @@ public class CreaterService {
         configuration.setDefaultEncoding("UTF-8");
         Template template = configuration.getTemplate("select.ftl");
         Map<String, Object> paramMap = new HashMap<String, Object>();
-        List<Column> columns = createrMapper.getColumns(tableName);
+        List<Column> columns = createrMapper.getColumns(tableName, createrCfg.getTableSchema());
         for (Column column : columns) {
             column.set_columnName(StringUtil.underlineToCamel(column.getColumnName()));
         }
@@ -275,7 +275,7 @@ public class CreaterService {
         configuration.setObjectWrapper(new DefaultObjectWrapper(Configuration.DEFAULT_INCOMPATIBLE_IMPROVEMENTS));
         configuration.setDefaultEncoding("UTF-8");
         Template template = configuration.getTemplate("datagrid-base-crud-js.ftl");
-        List<Column> columns = createrMapper.getColumns(tableName);
+        List<Column> columns = createrMapper.getColumns(tableName, createrCfg.getTableSchema());
         for (Column column : columns) {
             column.set_columnName(StringUtil.underlineToCamel(column.getColumnName()));
             String columnType = column.getColumnType();
@@ -322,7 +322,7 @@ public class CreaterService {
         configuration.setDefaultEncoding("UTF-8");
         Template template = configuration.getTemplate("model.ftl");
         Map<String, Object> paramMap = new HashMap<String, Object>();
-        List<Column> columns = createrMapper.getColumns(tableName);
+        List<Column> columns = createrMapper.getColumns(tableName, createrCfg.getTableSchema());
         for (Column column : columns) {
             String columnType = column.getColumnType();
             if (columnType.contains("varchar")) {
