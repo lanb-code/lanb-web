@@ -43,16 +43,40 @@
     menuName: 'roleUserManager',
     menuTitle: '用户角色管理',
     pk: 'roleUserId',
-    columns: [[{field: 'roleUserId', title: '角色用户ID', width: 50, hidden: true,}, {
-        field: 'roleId',
-        title: '角色ID',
-        width: 50,
-    }, {field: 'userId', title: '用户ID', width: 50,}, {
-        field: 'createTime',
-        title: '创建时间',
-        width: 50,
-        formatter: dateFormatter,
-    },]],
+    columns: [[
+        {
+            field: 'roleUserId',
+            title: '角色用户ID',
+            width: 50,
+            hidden: true
+        },
+        {
+            field: 'roleId',
+            title: '角色ID',
+            width: 50,
+            hidden: true
+        },
+        {
+            field: 'userId',
+            title: '用户ID',
+            width: 50,
+            hidden: true
+        }, {
+            field: 'roleName',
+            title: '角色名',
+            width: 50
+        },
+        {
+            field: 'userName',
+            title: '用户名',
+            width: 50
+        }, {
+            field: 'createTime',
+            title: '创建时间',
+            width: 50,
+            formatter: dateFormatter
+        }
+    ]],
     api: {save: '/roleUser/save', delete: '/roleUser/delete', update: '/roleUser/update', query: '/roleUser/query'}
 });
 $(function () {

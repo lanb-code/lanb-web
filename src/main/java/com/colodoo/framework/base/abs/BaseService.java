@@ -2,6 +2,7 @@ package com.colodoo.framework.base.abs;
 
 import com.colodoo.framework.exception.DAOException;
 import com.colodoo.framework.redis.RedisService;
+import com.colodoo.framework.utils.Contants;
 import com.colodoo.framework.utils.SpringContextsUtil;
 import com.colodoo.framework.utils.StringUtil;
 import lombok.extern.slf4j.Slf4j;
@@ -12,6 +13,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.lang.invoke.SerializedLambda;
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.ParameterizedType;
 import java.util.ArrayList;
@@ -131,30 +133,10 @@ public abstract class BaseService<M> {
     /*查询部分*/
 
     /**
-     * 增加条件
-     */
-    @Deprecated
-    public void where(Object example) throws DAOException {
-        try {
-            Method find = this.getMethod(MAPPER_SELECT_BY_EXAMPLE, this.getExampleClass());
-            example = this.getExampleClass().newInstance();
-            //开始创建条件
-            Method createCriteria = this.getExampleClass().getMethod("createCriteria");
-            createCriteria.setAccessible(true);
-            Object criteria = createCriteria.invoke(example);
-            for (Method method : criteria.getClass().getMethods()) {
-                log.info(method.getName());
-            }
-        } catch (Exception e) {
-            throw new DAOException(e.getMessage());
-        }
-    }
-
-    /**
      * 根据uuid取实体类
      *
      * @param uuid
-     * @return
+     * @return 实体
      */
     public M get(String uuid) throws DAOException {
         M model;
@@ -171,7 +153,7 @@ public abstract class BaseService<M> {
      * 根据递增id取实体类
      *
      * @param id
-     * @return
+     * @return 实体
      */
     public M get(Long id) throws DAOException {
         M model;
@@ -187,7 +169,7 @@ public abstract class BaseService<M> {
     /**
      * 查找
      *
-     * @return
+     * @return 查询列表
      */
     public List<M> find(Object example) throws DAOException {
         List<M> list;
@@ -203,7 +185,7 @@ public abstract class BaseService<M> {
     /**
      * 无参数查询
      *
-     * @return
+     * @return 查询列表
      */
     public List<M> find() throws DAOException {
         return this.find(null);
@@ -211,14 +193,60 @@ public abstract class BaseService<M> {
 
     /*复杂关联查询*/
 
+    /*批量操作*/
+
     /**
-     * 根据id查询
-     * @param id
-     * @param vo
+     * 批量删除,字符串逗号分隔方式
+     *
+     * @param ids
      * @return
      */
-    public List<Object> find(String id, Object vo) {
-        List<Object> list = new ArrayList<>();
+    public int batchDelete(String ids) {
+        String[] idsArray = ids.split(",");
+        int ret = this.batchDelete(idsArray);
+        return ret;
+    }
+
+    /**
+     * 批量删除,字符串数组方式
+     *
+     * @param dis
+     * @return
+     */
+    public int batchDelete(String[] dis) {
+        int ret = Contants.CODE_ZERO;
+        for (String id : dis) {
+            try {
+                this.delete(id);
+                ret++;
+            } catch (DAOException e) {
+                e.printStackTrace();
+                continue;
+            }
+        }
+        if (ret == Contants.CODE_ZERO) {
+            ret = Contants.CODE_FAILED;
+        }
+        return ret;
+    }
+
+    /*灵活查询*/
+    public List select(String statementId, Object parm) {
+        List list = null;
+        Method method;
+        try {
+            if (parm == null) {
+                method = this.getMethod(statementId);
+                list = (List) method.invoke(this.getMapper());
+            } else {
+                method = this.getMethod(statementId, parm.getClass());
+                list = (List) method.invoke(this.getMapper(), parm);
+            }
+        } catch (IllegalAccessException e) {
+            log.error(e.getMessage());
+        } catch (InvocationTargetException e) {
+            log.error(e.getMessage());
+        }
         return list;
     }
 
@@ -239,7 +267,7 @@ public abstract class BaseService<M> {
     /**
      * 获得实体类
      *
-     * @return
+     * @return 实体类
      */
     private Class<M> getModelClass() {
         if (this.modelClazz == null) {

@@ -193,4 +193,18 @@
       create_time = #{createTime,jdbcType=TIMESTAMP}
     where role_user_id = #{roleUserId,jdbcType=VARCHAR}
   </update>
+
+  <select id="select" resultType="com.colodoo.framework.manager.roleUser.model.RoleUserVO">
+    SELECT
+    ru.role_user_id AS roleUserId,
+    ru.role_id AS roleId,
+    ru.user_id AS userId,
+    ru.create_time AS createTime,
+    u.user_name AS userName,
+    r.role_name AS roleName
+    FROM
+    role_user ru
+    INNER JOIN role r ON ru.role_id = r.role_id
+    INNER JOIN USER u ON ru.user_id = u.user_id
+  </select>
 </mapper>

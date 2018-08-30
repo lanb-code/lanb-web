@@ -3,6 +3,8 @@ package com.colodoo.framework.manager.roleUser.service;
 import com.colodoo.framework.manager.roleUser.model.RoleUser;
 import com.colodoo.framework.manager.roleUser.model.RoleUserExample;
 import java.util.List;
+
+import com.colodoo.framework.manager.roleUser.model.RoleUserVO;
 import org.apache.ibatis.annotations.Param;
 
 public interface RoleUserMapper {
@@ -17,6 +19,8 @@ public interface RoleUserMapper {
     int insertSelective(RoleUser record);
 
     List<RoleUser> selectByExample(RoleUserExample example);
+
+    List<RoleUserVO> select();
 
     RoleUser selectByPrimaryKey(String roleUserId);
 

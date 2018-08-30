@@ -13,6 +13,7 @@ public class Contants {
 
     /*返回值相关*/
     public static final int CODE_FAILED = -1;
+    public static final int CODE_ZERO = 0;
 
     /*登录参数相关*/
     //最大登录次数

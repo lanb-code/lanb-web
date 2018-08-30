@@ -15,6 +15,7 @@
     <script type="text/javascript" src="/easyui/jquery.min.js"></script>
     <script type="text/javascript" src="/easyui/jquery.easyui.min.js"></script>
     <script type="text/javascript" src="/js/Util.js"></script>
+    <script type="text/javascript" src="/js/md5.min.js"></script>
     <script type="text/javascript" src="/easyui/locale/easyui-lang-zh_CN.js"></script>
 </head>
 <body>
@@ -65,7 +66,7 @@
                 type: 'post',
                 data: {
                     'userName': $('#userName').val(),
-                    'password': $('#password').val()
+                    'password': MD5($('#password').val())
                 },
                 dataType: 'json',
                 success: function (result) {

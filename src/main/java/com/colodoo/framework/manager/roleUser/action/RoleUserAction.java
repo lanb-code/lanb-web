@@ -1,6 +1,7 @@
 package com.colodoo.framework.manager.roleUser.action;
 
 import com.colodoo.framework.manager.roleUser.model.RoleUser;
+import com.colodoo.framework.manager.roleUser.model.RoleUserVO;
 import com.colodoo.framework.manager.roleUser.service.RoleUserService;
 import com.colodoo.framework.easyui.Page;
 import com.github.pagehelper.PageInfo;
@@ -80,7 +81,7 @@ public class RoleUserAction {
 
     @RequestMapping(value = "/query")
     @ResponseBody
-    public List<RoleUser> query() {
+    public List<RoleUserVO> query() {
         return roleUserService.query();
     }
 
