@@ -31,10 +31,43 @@
     <div data-options="region:'west',split:true" class="sc-left-menu">
         <div id="sc-accordion" class="easyui-accordion" style="width:100%;">
         </div>
+    <#--<div id="sc-sidemenu" style="width: 98%;"></div>-->
     </div>
     <div data-options="region:'center'" style="width: 100%;">
         <div id="sc-tabs" class="easyui-tabs" fit="true" border="false" plain="true">
             <div title="主页" data-options="selected:true">
+                <div style="display: flex; justify-content: space-between; height: 20%">
+                    <div class="easyui-panel" title="快捷方式"
+                         style="width: 70%;height:100%;padding:18px; display: flex; justify-content: space-around;">
+                        <a href="#" onclick="openTab('代码生成器', '/creater')" class="easyui-linkbutton">代码生成器</a>
+                        <a href="#" class="easyui-linkbutton">用户配置</a>
+                        <a href="#" class="easyui-linkbutton">角色管理</a>
+                        <a href="#" class="easyui-linkbutton">查看日志</a>
+                        <a href="#" class="easyui-linkbutton">系统设置</a>
+                    </div>
+                    <div class="easyui-panel" title="版本信息"
+                         style="width: 28%;height:100%;padding:10px;">
+                        <p style="padding: 5px;">当前版本&nbsp;v1.0</p>
+                        <p style="padding: 5px;">基于框架&nbsp;easyui</p>
+                    </div>
+                </div>
+
+                <div style="display: flex; justify-content: space-between; margin-top: 10px; height: 73%">
+                    <div class="easyui-panel" title="用户监控"
+                         style="width: 70%;height:100%;padding:10px;">
+                        <h1 style="text-align: center; margin-top: 20%;">当前暂无在线用户</h1>
+                    </div>
+                    <table class="easyui-datagrid" title="消息推送" lines="true" data-options="url: '/msg/query'"
+                        style="width: 28%;height:100%;padding:10px;">
+                        <thead>
+                        <tr>
+                            <th data-options="field:'msgId', hidden: true">消息ID</th>
+                            <th data-options="field:'msgTitle',width:'50%'">消息标题</th>
+                            <th data-options="field:'createTime',width:'50%'">创建时间</th>
+                        </tr>
+                        </thead>
+                    </table>
+                </div>
             </div>
         </div>
     </div>
@@ -42,14 +75,25 @@
 
 <div id="mm" class="easyui-menu" style="width:120px;">
     <div name="1">关闭</div>
-    <div name="2">关闭所有</div>
-    <div name="3">刷新</div>
+    <div name="2">关闭其他</div>
+    <div name="3">关闭所有</div>
+    <div name="4">刷新</div>
+
 </div>
 
 <script>
     var index = {
     <#--初始化菜单-->
         initMenu: function () {
+            /* $.ajax({
+                 url: '/menu/getSubMenuList',
+                 dataType: 'json',
+                 success: function (data) {
+                     $('#sc-sidemenu').sidemenu({
+                         data: data
+                     })
+                 }
+             })*/
             $.ajax({
                 url: '/menu/getSubMenuList',
                 success: function (data) {
@@ -75,9 +119,7 @@
                                     $('#sc-tabs').tabs('add', {
                                         title: title,
                                         href: menuUrl,
-                                        closable: true,
-//                                        closed: true,
-//                                        cache: true
+                                        closable: true
                                     });
                                 }
                             }
@@ -130,13 +172,16 @@
                 case 1:
                     $('#sc-tabs').tabs('close', curTabTitle);
                     break;
-                case 2:
+                case 3:
                     this.closeAll();
                     break;
-                case 3:
+                case 4:
                     var currentTab = $('#sc-tabs').tabs('getTab', curTabTitle);
                     var href = currentTab.panel('options').href;
                     currentTab.panel('refresh', href);
+                    break;
+                case 2:
+                    this.closeOther(curTabTitle);
                     break;
             }
         },
@@ -147,6 +192,16 @@
                 //获取所有可关闭的选项卡
                 var tab = $(".tabs-closable", this).text();
                 $(".easyui-tabs").tabs('close', tab);
+            });
+        },
+
+        closeOther: function (curTabTitle) {
+            $(".tabs li").each(function (index, obj) {
+                //获取所有可关闭的选项卡
+                var tab = $(".tabs-closable", this).text();
+                if (curTabTitle !== tab) {
+                    $(".easyui-tabs").tabs('close', tab);
+                }
             });
         }
     }
@@ -159,6 +214,20 @@
             setTimeout(index.redraw, 300);
         };
     });
+
+    function openTab(title, menuUrl) {
+        if (menuUrl == '')
+            return;
+        if ($('#sc-tabs').tabs('exists', title)) {
+            $('#sc-tabs').tabs('select', title);
+        } else {
+            $('#sc-tabs').tabs('add', {
+                title: title,
+                href: menuUrl,
+                closable: true
+            });
+        }
+    }
 
 
 </script>
