@@ -60,7 +60,10 @@ public class MenuService {
             HashMap<String, String> attr = new HashMap<String, String>();
             attr.put("menuUrl", menu.getMenuUrl());
             tree.setAttributes(attr);
-            tree.setChildren(getSubMenuList(tree.getId()));
+            List tempList = getSubMenuList(tree.getId());
+            if(tempList.size() != 0) {
+                tree.setChildren(tempList);
+            }
             list.add(tree);
         }
         return list;

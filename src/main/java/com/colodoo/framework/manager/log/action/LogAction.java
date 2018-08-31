@@ -1,34 +1,41 @@
-package com.colodoo.framework.manager.system.action;
+package com.colodoo.framework.manager.log.action;
 
-import com.colodoo.framework.manager.system.model.System;
-import com.colodoo.framework.manager.system.service.SystemService;
+import com.colodoo.framework.manager.log.model.Log;
+import com.colodoo.framework.manager.log.service.LogService;
 import com.colodoo.framework.easyui.Page;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.List;
 
+/**
+* @author colodoo
+* @date 2018-8-31 16:14:20
+* @description
+*/
 @Controller
-@RequestMapping(value = "/system")
-public class SystemAction {
+@RequestMapping(value = "/log")
+@CrossOrigin
+public class LogAction {
 
     @Autowired
-    SystemService systemService;
+    LogService logService;
 
-    @RequestMapping(value = "/systemManager")
-    public String systemManager() {
-        return "manager/system/systemManager";
+    @RequestMapping(value = "/logManager")
+    public String logManager() {
+        return "manager/log/logManager";
     }
 
     @RequestMapping(value = "/save")
     @ResponseBody
-    public Map save(System model) {
+    public Map save(Log model) {
         Map rspMap = new HashMap();
-        int ret = systemService.save(model);
+        int ret = logService.saveLog(model);
         if(ret > 0) {
             rspMap.put("success", true);
         } else {
@@ -39,9 +46,9 @@ public class SystemAction {
 
     @RequestMapping(value = "/delete")
     @ResponseBody
-    public Map delete(System model) {
+    public Map delete(Log model) {
         Map rspMap = new HashMap();
-        int ret = systemService.delete(model);
+        int ret = logService.deleteLog(model);
         if(ret > 0) {
             rspMap.put("success", true);
         } else {
@@ -52,9 +59,9 @@ public class SystemAction {
 
     @RequestMapping(value = "/update")
     @ResponseBody
-    public Map update(System model) {
+    public Map update(Log model) {
         Map rspMap = new HashMap();
-        int ret = systemService.update(model);
+        int ret = logService.updateLog(model);
         if(ret > 0) {
             rspMap.put("success", true);
         } else {
@@ -65,23 +72,23 @@ public class SystemAction {
 
     @RequestMapping(value = "/queryById")
     @ResponseBody
-    public Map queryById(System model) {
+    public Map queryById(Log model) {
         Map rspMap = new HashMap();
-        rspMap.put("rows", systemService.queryById(model));
+        rspMap.put("rows", logService.queryById(model));
         return rspMap;
     }
 
     @RequestMapping(value = "/query")
     @ResponseBody
-    public List<System> query() {
-        return systemService.query();
+    public List<Log> query() {
+        return logService.query();
     }
 
     @RequestMapping(value = "/queryPage")
     @ResponseBody
     public Map query(Page page) {
         Map rspMap = new HashMap();
-        PageInfo info = systemService.query(page);
+        PageInfo info = logService.query(page);
         rspMap.put("rows", info.getList());
         rspMap.put("total", info.getTotal());
         return rspMap;

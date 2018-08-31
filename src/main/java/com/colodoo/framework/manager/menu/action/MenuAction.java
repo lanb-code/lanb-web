@@ -27,6 +27,11 @@ public class MenuAction {
     @Autowired
     MenuMapper menuMapper;
 
+    @RequestMapping(value = "/menuSetting")
+    public String menuSetting() {
+        return "manager/menu/menuSetting";
+    }
+
     @RequestMapping(value = "/getRootMenuList")
     @ResponseBody
     public Map getRootMenuList(Page page) {

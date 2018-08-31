@@ -3,7 +3,7 @@ package com.colodoo.framework.exception;
 /**
  * @author colodoo
  * @date 2018/8/11 23:46
- * @description
+ * @description 数据库操作层异常
  */
 public class DAOException extends Exception {
 

@@ -3,7 +3,7 @@ package com.colodoo.framework.exception;
 /**
  * @author colodoo
  * @date 2018/8/10 22:56
- * @description
+ * @description 应用层面的异常
  */
 public class AppException extends Exception {
 
