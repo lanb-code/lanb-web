@@ -8,7 +8,7 @@ import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
-@Configuration
+//@Configuration
 public class SecurityConfig implements WebMvcConfigurer {
     /**
      * 日志拦截器
@@ -32,13 +32,13 @@ public class SecurityConfig implements WebMvcConfigurer {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(logInterceptor);
-//        registry.addInterceptor(loginInterceptor)
-//                .excludePathPatterns("/js/**")
-//                .excludePathPatterns("/css/**")
-//                .excludePathPatterns("/easyui/**")
-//                .excludePathPatterns("/images/**")
-//                .excludePathPatterns("/user/login")
-//                .excludePathPatterns("/user/loginCheck")
-//                .addPathPatterns("/**");
+        registry.addInterceptor(loginInterceptor)
+                .excludePathPatterns("/js/**")
+                .excludePathPatterns("/css/**")
+                .excludePathPatterns("/easyui/**")
+                .excludePathPatterns("/images/**")
+                .excludePathPatterns("/user/login")
+                .excludePathPatterns("/user/loginCheck")
+                .addPathPatterns("/**");
     }
 }
