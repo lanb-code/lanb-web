@@ -1,4 +1,4 @@
-package com.colodoo.framework.info;
+package com.colodoo.framework.common;
 
 /**
  * @author colodoo

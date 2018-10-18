@@ -26,6 +26,7 @@ a {
 
 .panel-title {
     font-size: 12px !important;
+    font-weight: normal !important;
 }
 
 .accordion .accordion-header-selected .panel-title {

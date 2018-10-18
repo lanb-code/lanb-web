@@ -1,5 +1,6 @@
 package com.colodoo.framework.base.abs;
 
+import com.colodoo.framework.common.SessionObject;
 import com.colodoo.framework.exception.DAOException;
 import com.colodoo.framework.redis.RedisService;
 import com.colodoo.framework.utils.Contants;
@@ -12,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.servlet.http.HttpSession;
 import java.lang.invoke.SerializedLambda;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -29,6 +31,9 @@ import java.util.List;
 @Slf4j
 @Transactional(rollbackFor = Exception.class)
 public abstract class BaseService<M> {
+
+    @Autowired
+    private HttpSession session;
 
     @Autowired
     private RedisService redis;
@@ -355,6 +360,11 @@ public abstract class BaseService<M> {
     /*redius相关*/
     public RedisService getRedis() {
         return redis;
+    }
+
+    /*取当前会话对象*/
+    public SessionObject getSessionObject() {
+        return (SessionObject) session.getAttribute("SessionObject");
     }
 
 }

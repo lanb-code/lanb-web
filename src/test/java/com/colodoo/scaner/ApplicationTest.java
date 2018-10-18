@@ -26,7 +26,6 @@ import org.springframework.test.web.servlet.MockMvcBuilder;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
-import java.sql.Timestamp;
 import java.util.Date;
 import java.util.List;
 import java.util.Random;
@@ -46,7 +45,7 @@ public class ApplicationTest {
     public void testInsert() {
         com.colodoo.manager.test.model.Test test = new com.colodoo.manager.test.model.Test();
         test.setTestName("测试" + new Random().nextInt());
-        test.setCreateTime(new Timestamp(new Date().getTime()));
+        test.setCreateTime(new Date());
         testService.saveTest(test);
     }
 
@@ -65,7 +64,7 @@ public class ApplicationTest {
     public void testUpdate() {
         com.colodoo.manager.test.model.Test model = new com.colodoo.manager.test.model.Test();
         model.setTestId("63aa489558074390acfd2681e5928643");
-        model.setCreateTime(new Timestamp(new Date().getTime()));
+        model.setCreateTime(new Date());
         model.setTestName("2");
         testService.updateTest(model);
     }

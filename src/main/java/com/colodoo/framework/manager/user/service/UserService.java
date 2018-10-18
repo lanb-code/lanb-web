@@ -1,6 +1,8 @@
 package com.colodoo.framework.manager.user.service;
 
-import com.colodoo.framework.info.Msg;
+import com.colodoo.framework.base.abs.BaseService;
+import com.colodoo.framework.common.Msg;
+import com.colodoo.framework.common.SessionObject;
 import com.colodoo.framework.manager.user.model.User;
 import com.colodoo.framework.utils.Contants;
 import com.colodoo.framework.utils.StringUtil;
@@ -11,6 +13,7 @@ import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.HttpSession;
 import java.util.Date;
 import java.util.List;
 
@@ -19,6 +22,8 @@ public class UserService {
 
     @Autowired
     UserMapper userMapper;
+    @Autowired
+    HttpSession session;
 
     public int save(User model) {
         model.setUserId(StringUtil.uuid());
@@ -66,6 +71,10 @@ public class UserService {
         List<User> users = userMapper.selectByExample(example);
         if (users.size() == 1) {
             msg.setSuccess(true);
+            //成功以后创建sessionObject
+            SessionObject sessionObject = new SessionObject();
+            sessionObject.setUser(users.get(0));
+            session.setAttribute("sessionObject", sessionObject);
             return msg;
         } else {
             failLogin(model);

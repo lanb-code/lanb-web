@@ -1,6 +1,7 @@
 package com.colodoo.framework.manager.user.action;
 
-import com.colodoo.framework.info.Msg;
+import com.colodoo.framework.common.Msg;
+import com.colodoo.framework.common.SessionObject;
 import com.colodoo.framework.manager.user.model.User;
 import com.colodoo.framework.manager.user.service.UserService;
 import com.colodoo.framework.easyui.Page;
@@ -40,12 +41,12 @@ public class UserAction {
     @ResponseBody
     public Msg loginCheck(User model, HttpSession session) {
         Msg msg = new Msg();
-        Object userName = session.getAttribute("userName");
+        SessionObject sessionObject = (SessionObject)session.getAttribute("sessionObject");
         //已经登录
-        if (userName != null) {
+        if (sessionObject != null) {
             msg.setSuccess(true);
             model.setPassword(null);
-            model.setUserName(userName.toString());
+            model.setUserName(sessionObject.getUser().getUserName());
             msg.setData(model);
             msg.setMsg(Contants.LOGINED);
         } else {
@@ -58,7 +59,6 @@ public class UserAction {
                 msg.setMsg(Contants.LOGIN_SUCCESS);
                 model.setPassword(null);
                 msg.setData(model);
-                session.setAttribute("userName", model.getUserName());
             } else {//登录失败
                 msg.setSuccess(false);
                 msg.setMsg(Contants.LOGIN_FAIL);
@@ -71,8 +71,8 @@ public class UserAction {
     @ResponseBody
     public Msg logout(HttpSession session) {
         Msg msg = new Msg();
-        if(session.getAttribute("userName") != null) {
-            session.removeAttribute("userName");
+        if(session.getAttribute("sessionObject") != null) {
+            session.removeAttribute("sessionObject");
             msg.setSuccess(true);
             msg.setMsg("注销成功!");
         } else {

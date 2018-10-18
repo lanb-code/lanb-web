@@ -1,6 +1,6 @@
 package com.colodoo.manager.test.action;
 
-import com.colodoo.framework.info.Msg;
+import com.colodoo.framework.common.Msg;
 import com.colodoo.framework.utils.Contants;
 import com.colodoo.manager.test.model.Test;
 import com.colodoo.manager.test.service.TestService;

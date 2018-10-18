@@ -43,6 +43,9 @@ public class CodeInfoService {
         if(model.getCodeTypeId() != null) {
             example.createCriteria().andCodeTypeIdEqualTo(model.getCodeTypeId());
         }
+        if(model.getCodeTypeId() != null) {
+            example.createCriteria().andCodeTypeIdEqualTo(model.getCodeTypeId());
+        }
         return codeInfoMapper.selectByExample(example);
     }
 

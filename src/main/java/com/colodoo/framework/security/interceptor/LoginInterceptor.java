@@ -1,5 +1,6 @@
 package com.colodoo.framework.security.interceptor;
 
+import com.colodoo.framework.common.SessionObject;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
@@ -16,8 +17,8 @@ public class LoginInterceptor implements HandlerInterceptor {
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         HttpSession session = request.getSession();
         //判断是否登录
-        Object userName = session.getAttribute("userName");
-        if (userName != null) {
+        SessionObject sessionObject = (SessionObject) session.getAttribute("sessionObject");
+        if (sessionObject != null) {
             return true;
         } else {
             response.sendRedirect(request.getContextPath() + "/user/login");
