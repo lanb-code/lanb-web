@@ -23,7 +23,7 @@
     <div data-options="region:'north'" style="height:42px;">
         <h1 class="logo"><a href="#"><i class="iconfont icon-saomiao"></i>&nbsp;LanbWeb</a></h1>
         <div class="toolbar">
-            <span><a href="#"><i class="iconfont icon-yonghu"></i>&nbsp;用户</a></span>
+            <span><a href="#"><i class="iconfont icon-yonghu"></i>&nbsp;${Session.userName!"暂无用户"}</a></span>
             <span><a href="#" onclick="logout()"><i class="iconfont icon-tuichu"></i>&nbsp;退出</a></span>
         </div>
     </div>
