@@ -46,10 +46,10 @@ public class ShiroConfig {
         // 设置拦截器
         Map<String, String> filterChainDefinitionMap = new LinkedHashMap<>();
         //匿名访问静态资源
-        filterChainDefinitionMap.put("/js/*", "anon");
-        filterChainDefinitionMap.put("/css/*", "anon");
-        filterChainDefinitionMap.put("/easyui/*", "anon");
-        filterChainDefinitionMap.put("/images/*", "anon");
+        filterChainDefinitionMap.put("/js/**", "anon");
+        filterChainDefinitionMap.put("/css/**", "anon");
+        filterChainDefinitionMap.put("/easyui/**", "anon");
+        filterChainDefinitionMap.put("/images/**", "anon");
         //用户，需要角色权限 “user”
         filterChainDefinitionMap.put("/menu/**", "roles[user]");
         //开放登陆接口

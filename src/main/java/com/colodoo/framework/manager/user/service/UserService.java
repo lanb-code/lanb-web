@@ -1,5 +1,6 @@
 package com.colodoo.framework.manager.user.service;
 
+import com.colodoo.framework.info.Msg;
 import com.colodoo.framework.manager.user.model.User;
 import com.colodoo.framework.utils.Contants;
 import com.colodoo.framework.utils.StringUtil;
@@ -47,13 +48,15 @@ public class UserService {
         return new PageInfo(userMapper.selectByExample(null));
     }
 
-    public boolean loginCheck(User model) {
+    public Msg loginCheck(User model) {
+        Msg msg = new Msg();
         //是否存在空参数
         if (model.getUserName() == null
                 || "".equals(model.getUserName())
                 || model.getPassword() == null
                 || "".equals(model.getPassword())) {
-            return false;
+            msg.setSuccess(false);
+            return msg;
         }
         UserExample example = new UserExample();
         example.createCriteria()
@@ -62,10 +65,12 @@ public class UserService {
                 .andEnableEqualTo(Contants.TRUE);
         List<User> users = userMapper.selectByExample(example);
         if (users.size() == 1) {
-            return true;
+            msg.setSuccess(true);
+            return msg;
         } else {
             failLogin(model);
-            return false;
+            msg.setSuccess(false);
+            return msg;
         }
     }
 

@@ -20,8 +20,6 @@ public class LoginInterceptor implements HandlerInterceptor {
         if (userName != null) {
             return true;
         } else {
-            log.error("未登录!");
-            log.info(request.getContextPath() + "/user/login");
             response.sendRedirect(request.getContextPath() + "/user/login");
             return false;
         }

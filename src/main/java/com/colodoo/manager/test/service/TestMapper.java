@@ -2,9 +2,7 @@ package com.colodoo.manager.test.service;
 
 import com.colodoo.manager.test.model.Test;
 import com.colodoo.manager.test.model.TestExample;
-
 import java.util.List;
-
 import org.apache.ibatis.annotations.Param;
 
 public interface TestMapper {

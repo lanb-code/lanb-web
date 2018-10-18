@@ -1,8 +1,10 @@
 package com.colodoo.framework.manager.user.action;
 
+import com.colodoo.framework.info.Msg;
 import com.colodoo.framework.manager.user.model.User;
 import com.colodoo.framework.manager.user.service.UserService;
 import com.colodoo.framework.easyui.Page;
+import com.colodoo.framework.utils.Contants;
 import com.github.pagehelper.PageInfo;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.UsernamePasswordToken;
@@ -36,33 +38,48 @@ public class UserAction {
 
     @RequestMapping(value = "/loginCheck")
     @ResponseBody
-    public Map loginCheck(User model, HttpSession session) {
-        Map map = new HashMap();
+    public Msg loginCheck(User model, HttpSession session) {
+        Msg msg = new Msg();
         Object userName = session.getAttribute("userName");
         //已经登录
         if (userName != null) {
-            map.put("success", true);
+            msg.setSuccess(true);
             model.setPassword(null);
             model.setUserName(userName.toString());
-            map.put("user", model);
-            map.put("msg", "您已经登录!");
+            msg.setData(model);
+            msg.setMsg(Contants.LOGINED);
         } else {
             //登录成功
-            if (userService.loginCheck(model)) {
+            msg = userService.loginCheck(model);
+            if (msg.isSuccess()) {
                 Subject subject = SecurityUtils.getSubject();
                 UsernamePasswordToken token = new UsernamePasswordToken(model.getUserName(), model.getPassword());
                 subject.login(token);
-                map.put("success", true);
-                map.put("msg", "登录成功!");
+                msg.setMsg(Contants.LOGIN_SUCCESS);
                 model.setPassword(null);
-                map.put("user", model);
+                msg.setData(model);
                 session.setAttribute("userName", model.getUserName());
             } else {//登录失败
-                map.put("success", false);
-                map.put("msg", "登录失败!");
+                msg.setSuccess(false);
+                msg.setMsg(Contants.LOGIN_FAIL);
             }
         }
-        return map;
+        return msg;
+    }
+
+    @RequestMapping(value = "/logout")
+    @ResponseBody
+    public Msg logout(HttpSession session) {
+        Msg msg = new Msg();
+        if(session.getAttribute("userName") != null) {
+            session.removeAttribute("userName");
+            msg.setSuccess(true);
+            msg.setMsg("注销成功!");
+        } else {
+            msg.setSuccess(false);
+            msg.setMsg("注销失败!");
+        }
+        return msg;
     }
 
     @RequestMapping(value = "/register")

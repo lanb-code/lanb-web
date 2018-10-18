@@ -2,6 +2,7 @@ package ${packageName}.action;
 
 import ${packageName}.model.${tableName?cap_first};
 import ${packageName}.service.${tableName?cap_first}Service;
+import com.colodoo.framework.utils.Contants;
 import com.colodoo.framework.easyui.Page;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,7 +40,7 @@ public class ${tableName?cap_first}Action {
         if(ret > 0) {
             rspMap.put("success", true);
         } else {
-            rspMap.put("msg", "保存失败");
+            rspMap.put("msg", Contants.MSG_SAVE_FAIL);
         }
         return rspMap;
     }
@@ -52,7 +53,7 @@ public class ${tableName?cap_first}Action {
         if(ret > 0) {
             rspMap.put("success", true);
         } else {
-            rspMap.put("msg", "删除失败");
+            rspMap.put("msg", Contants.MSG_DELETE_FAIL);
         }
         return rspMap;
     }
@@ -65,7 +66,7 @@ public class ${tableName?cap_first}Action {
         if(ret > 0) {
             rspMap.put("success", true);
         } else {
-            rspMap.put("msg", "更新失败");
+            rspMap.put("msg", Contants.MSG_UPDATE_FAIL);
         }
         return rspMap;
     }
@@ -89,8 +90,8 @@ public class ${tableName?cap_first}Action {
     public Map query(Page page) {
         Map rspMap = new HashMap();
         PageInfo info = ${tableName}Service.query(page);
-        rspMap.put("rows", info.getList());
-        rspMap.put("total", info.getTotal());
+        rspMap.put(Contants.TABLE_ROWS, info.getList());
+        rspMap.put(Contants.TABLE_TOTAL, info.getTotal());
         return rspMap;
     }
 }

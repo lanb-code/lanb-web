@@ -19,6 +19,34 @@ public class Contants {
     //最大登录次数
     public static final int MAX_LOGIN_TRY_COUNT = 5;
 
+    /*表格相关*/
+    //列表字段
+    public static final String TABLE_ROWS = "rows";
+    //总数字段
+    public static final String TABLE_TOTAL = "total";
+
+    /*接口提示相关*/
+    //保存失败
+    public static final String MSG_SAVE_FAIL = "保存失败";
+    //删除失败
+    public static final String MSG_DELETE_FAIL = "删除失败";
+    //更新失败
+    public static final String MSG_UPDATE_FAIL = "更新失败";
+
+    /*登录相关*/
+    //登录成功
+    public static final String LOGIN_SUCCESS = "登录成功!";
+    //登录失败
+    public static final String LOGIN_FAIL = "登录失败!";
+    //已经登录
+    public static final String LOGINED = "您已经登录!";
+
+    /*注册相关*/
+    //注册成功
+    public static final String REG_SUCCESS = "注册成功";
+    //注册失败
+    public static final String REG_FAIL = "注册失败";
+
     /*其他*/
 
 

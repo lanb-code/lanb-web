@@ -205,15 +205,15 @@ public class CreaterService {
         Map<String, Object> paramMap = new HashMap<String, Object>();
         paramMap.put("tableName", StringUtil.underlineToCamel2(actionParm.getTableName()));
         paramMap.put("packageName", actionParm.getPackageName());
-        Writer writer1 = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(new File(resultDirStr + "\\" + targetFileName)), "UTF-8"));
+    Writer writer1 = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(new File(resultDirStr + "\\" + targetFileName)), "UTF-8"));
         template.process(paramMap, writer);
         template.process(paramMap, writer1);
-        resultStr = writer.toString();
+    resultStr = writer.toString();
         writer.close();
         writer1.close();
         System.out.println(resultStr);
         return resultStr;
-    }
+}
 
     public String createServiceString(BaseParm serviceParm) throws IOException, TemplateException {
         String resultStr = "";

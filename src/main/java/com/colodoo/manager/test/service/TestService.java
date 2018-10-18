@@ -14,23 +14,25 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 /**
- * @author colodoo
- * @date 2018-8-11 15:08:12
- * @description
- */
+* @author colodoo
+* @date 2018-8-30 10:41:40
+* @description 
+*/
 @Service
 @Slf4j
 public class TestService extends BaseService<Test> {
 
     /**
-     * 新增数据
-     *
-     * @param model
-     * @return
-     */
+    * 新增数据
+    *
+    * @param model
+    * @return
+    */
     public int saveTest(Test model) {
         int ret = Contants.CODE_FAILED;
         model.setTestId(uuid());
+        // model.setCreateDate(new Date());
+        // model.setLastDate(new Date());
         try {
             ret = this.insert(model);
         } catch (DAOException e) {
@@ -40,11 +42,11 @@ public class TestService extends BaseService<Test> {
     }
 
     /**
-     * 删除数据
-     *
-     * @param model
-     * @return
-     */
+    * 删除数据
+    *
+    * @param model
+    * @return
+    */
     public int deleteTest(Test model) {
         int ret = Contants.CODE_FAILED;
         try {
@@ -56,11 +58,11 @@ public class TestService extends BaseService<Test> {
     }
 
     /**
-     * 更新数据
-     *
-     * @param model
-     * @return
-     */
+    * 更新数据
+    *
+    * @param model
+    * @return
+    */
     public int updateTest(Test model) {
         int ret = Contants.CODE_FAILED;
         try {
@@ -72,11 +74,11 @@ public class TestService extends BaseService<Test> {
     }
 
     /**
-     * 根据id查找单条数据
-     *
-     * @param model
-     * @return
-     */
+    * 根据id查找单条数据
+    *
+    * @param model
+    * @return
+    */
     public Test queryById(Test model) {
         Test test = null;
         try {
@@ -88,10 +90,10 @@ public class TestService extends BaseService<Test> {
     }
 
     /**
-     * 查找列表
-     *
-     * @return
-     */
+    * 查找列表
+    *
+    * @return
+    */
     public List<Test> query() {
         List<Test> list = null;
         TestExample example = new TestExample();
@@ -104,11 +106,11 @@ public class TestService extends BaseService<Test> {
     }
 
     /**
-     * 查找分页列表
-     *
-     * @param page
-     * @return
-     */
+    * 查找分页列表
+    *
+    * @param page
+    * @return
+    */
     public PageInfo query(Page page) {
         PageInfo pageInfo;
         List<Test> list = null;

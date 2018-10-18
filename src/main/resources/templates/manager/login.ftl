@@ -79,7 +79,7 @@
             })
         })
 
-        $("#loginBtn").trigger("click");
+        //$("#loginBtn").trigger("click");
     })
 
 </script>

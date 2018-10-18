@@ -1,5 +1,7 @@
 package com.colodoo.manager.test.action;
 
+import com.colodoo.framework.info.Msg;
+import com.colodoo.framework.utils.Contants;
 import com.colodoo.manager.test.model.Test;
 import com.colodoo.manager.test.service.TestService;
 import com.colodoo.framework.easyui.Page;
@@ -9,15 +11,16 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.List;
 
 /**
-* @author colodoo
-* @date 2018-8-11 15:08:12
-* @description
-*/
+ * @author colodoo
+ * @date 2018-8-30 10:41:40
+ * @description
+ */
 @Controller
 @RequestMapping(value = "/test")
 @CrossOrigin
@@ -33,49 +36,49 @@ public class TestAction {
 
     @RequestMapping(value = "/save")
     @ResponseBody
-    public Map save(Test model) {
-        Map rspMap = new HashMap();
+    public Msg save(Test model) {
+        Msg msg = new Msg();
         int ret = testService.saveTest(model);
-        if(ret > 0) {
-            rspMap.put("success", true);
+        if (ret > 0) {
+            msg.setSuccess(true);
         } else {
-            rspMap.put("msg", "保存失败");
+            msg.setMsg(Contants.MSG_SAVE_FAIL);
         }
-        return rspMap;
+        return msg;
     }
 
     @RequestMapping(value = "/delete")
     @ResponseBody
-    public Map delete(Test model) {
-        Map rspMap = new HashMap();
+    public Msg delete(Test model) {
+        Msg msg = new Msg();
         int ret = testService.deleteTest(model);
-        if(ret > 0) {
-            rspMap.put("success", true);
+        if (ret > 0) {
+            msg.setSuccess(true);
         } else {
-            rspMap.put("msg", "删除失败");
+            msg.setMsg(Contants.MSG_DELETE_FAIL);
         }
-        return rspMap;
+        return msg;
     }
 
     @RequestMapping(value = "/update")
     @ResponseBody
-    public Map update(Test model) {
-        Map rspMap = new HashMap();
+    public Msg update(Test model) {
+        Msg msg = new Msg();
         int ret = testService.updateTest(model);
-        if(ret > 0) {
-            rspMap.put("success", true);
+        if (ret > 0) {
+            msg.setSuccess(true);
         } else {
-            rspMap.put("msg", "更新失败");
+            msg.setMsg(Contants.MSG_UPDATE_FAIL);
         }
-        return rspMap;
+        return msg;
     }
 
     @RequestMapping(value = "/queryById")
     @ResponseBody
-    public Map queryById(Test model) {
-        Map rspMap = new HashMap();
-        rspMap.put("rows", testService.queryById(model));
-        return rspMap;
+    public Msg queryById(Test model) {
+        Msg msg = new Msg();
+        msg.setData(testService.queryById(model));
+        return msg;
     }
 
     @RequestMapping(value = "/query")
@@ -89,8 +92,8 @@ public class TestAction {
     public Map query(Page page) {
         Map rspMap = new HashMap();
         PageInfo info = testService.query(page);
-        rspMap.put("rows", info.getList());
-        rspMap.put("total", info.getTotal());
+        rspMap.put(Contants.TABLE_ROWS, info.getList());
+        rspMap.put(Contants.TABLE_TOTAL, info.getTotal());
         return rspMap;
     }
 }
