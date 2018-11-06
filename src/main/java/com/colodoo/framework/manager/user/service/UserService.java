@@ -3,6 +3,10 @@ package com.colodoo.framework.manager.user.service;
 import com.colodoo.framework.base.abs.BaseService;
 import com.colodoo.framework.common.Msg;
 import com.colodoo.framework.common.SessionObject;
+import com.colodoo.framework.manager.role.service.RoleMapper;
+import com.colodoo.framework.manager.roleUser.model.RoleUser;
+import com.colodoo.framework.manager.roleUser.model.RoleUserExample;
+import com.colodoo.framework.manager.roleUser.service.RoleUserMapper;
 import com.colodoo.framework.manager.user.model.User;
 import com.colodoo.framework.utils.Contants;
 import com.colodoo.framework.utils.StringUtil;
@@ -22,6 +26,8 @@ public class UserService {
 
     @Autowired
     UserMapper userMapper;
+    @Autowired
+    RoleUserMapper roleUserMapper;
     @Autowired
     HttpSession session;
 
@@ -73,7 +79,12 @@ public class UserService {
             msg.setSuccess(true);
             //成功以后创建sessionObject
             SessionObject sessionObject = new SessionObject();
-            sessionObject.setUser(users.get(0));
+            User user = users.get(0);
+            sessionObject.setUser(user);
+            RoleUserExample roleUserExample = new RoleUserExample();
+            roleUserExample.createCriteria().andUserIdEqualTo(user.getUserId());
+            List<RoleUser> roleUsers = roleUserMapper.selectByExample(roleUserExample);
+            sessionObject.setRoleUsers(roleUsers);
             session.setAttribute("sessionObject", sessionObject);
             return msg;
         } else {

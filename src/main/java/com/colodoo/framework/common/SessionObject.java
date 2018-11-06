@@ -1,7 +1,10 @@
 package com.colodoo.framework.common;
 
 import com.colodoo.framework.manager.role.model.Role;
+import com.colodoo.framework.manager.roleUser.model.RoleUser;
 import com.colodoo.framework.manager.user.model.User;
+
+import java.util.List;
 
 /**
  * @author colodoo
@@ -10,7 +13,7 @@ import com.colodoo.framework.manager.user.model.User;
  */
 public class SessionObject {
     private User user;
-    private Role role;
+    private List<RoleUser> roleUsers;
 
     public User getUser() {
         return user;
@@ -20,11 +23,11 @@ public class SessionObject {
         this.user = user;
     }
 
-    public Role getRole() {
-        return role;
+    public List<RoleUser> getRoleUsers() {
+        return roleUsers;
     }
 
-    public void setRole(Role role) {
-        this.role = role;
+    public void setRoleUsers(List<RoleUser> roleUsers) {
+        this.roleUsers = roleUsers;
     }
 }

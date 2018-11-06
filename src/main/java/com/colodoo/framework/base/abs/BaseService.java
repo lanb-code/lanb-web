@@ -364,7 +364,7 @@ public abstract class BaseService<M> {
 
     /*取当前会话对象*/
     public SessionObject getSessionObject() {
-        return (SessionObject) session.getAttribute("SessionObject");
+        return (SessionObject) session.getAttribute("sessionObject");
     }
 
 }
