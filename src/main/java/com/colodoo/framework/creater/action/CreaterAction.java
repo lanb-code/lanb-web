@@ -56,6 +56,12 @@ public class CreaterAction {
         return "";
     }
 
+    /**
+     * 生成所有代码字符串（除前端代码）
+     *
+     * @param allParm
+     * @return
+     */
     @RequestMapping(value = "/createAllString")
     @ResponseBody
     public Map createAllString(BaseParm allParm) {
@@ -75,6 +81,12 @@ public class CreaterAction {
         return rspMap;
     }
 
+    /**
+     * 创建实体类代码
+     *
+     * @param tableName
+     * @return
+     */
     @RequestMapping(value = "/createModelString")
     @ResponseBody
     public String createModelString(String tableName) {
@@ -89,6 +101,12 @@ public class CreaterAction {
         return resultStr;
     }
 
+    /**
+     * 创建增删改查前端代码
+     *
+     * @param datagridParm
+     * @return
+     */
     @RequestMapping(value = "/createDatagridString")
     @ResponseBody
     public Map createDatagridString(DatagridParm datagridParm) {
@@ -104,6 +122,12 @@ public class CreaterAction {
         return rspMap;
     }
 
+    /**
+     * 创建Mybatis字符串
+     *
+     * @param mybatisParm
+     * @return
+     */
     @RequestMapping(value = "/createMybatisString")
     @ResponseBody
     public Map createMybatisString(BaseParm mybatisParm) {
@@ -113,6 +137,12 @@ public class CreaterAction {
         return rspMap;
     }
 
+    /**
+     * 创建接口类
+     *
+     * @param actionParm
+     * @return
+     */
     @RequestMapping(value = "/createActionString")
     @ResponseBody
     public Map createActionString(BaseParm actionParm) {
@@ -128,6 +158,12 @@ public class CreaterAction {
         return rspMap;
     }
 
+    /**
+     * 生成服务类代码
+     *
+     * @param serviceParm
+     * @return
+     */
     @RequestMapping(value = "/createServiceString")
     @ResponseBody
     public Map createServiceString(BaseParm serviceParm) {

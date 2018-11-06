@@ -108,12 +108,17 @@ public class CreaterService {
         }
         paramMap.put("columns", columns);
         paramMap.put("tableName", tableName);
-        String resultFile = dir.getAbsolutePath() + "/select.sql";
         StringWriter writer = new StringWriter();
         template.process(paramMap, writer);
         return writer.toString();
     }
 
+    /**
+     * 创建Mybatis字符串
+     *
+     * @param mybatisParm
+     * @return
+     */
     public String createMybatisString(BaseParm mybatisParm) {
         String result = "";
         try {
@@ -158,7 +163,6 @@ public class CreaterService {
             BufferedReader br = new BufferedReader(fr);
             String str = null;
             String rs = "";
-            //
             while ((str = br.readLine()) != null) {
                 if (str == null) {
                     continue;
@@ -187,6 +191,14 @@ public class CreaterService {
         return result;
     }
 
+    /**
+     * 创建接口类
+     *
+     * @param actionParm
+     * @return
+     * @throws IOException
+     * @throws TemplateException
+     */
     public String createActionString(BaseParm actionParm) throws IOException, TemplateException {
         String resultStr = "";
         StringWriter writer = new StringWriter();
@@ -205,16 +217,24 @@ public class CreaterService {
         Map<String, Object> paramMap = new HashMap<String, Object>();
         paramMap.put("tableName", StringUtil.underlineToCamel2(actionParm.getTableName()));
         paramMap.put("packageName", actionParm.getPackageName());
-    Writer writer1 = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(new File(resultDirStr + "\\" + targetFileName)), "UTF-8"));
+        Writer writer1 = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(new File(resultDirStr + "\\" + targetFileName)), "UTF-8"));
         template.process(paramMap, writer);
         template.process(paramMap, writer1);
-    resultStr = writer.toString();
+        resultStr = writer.toString();
         writer.close();
         writer1.close();
         System.out.println(resultStr);
         return resultStr;
-}
+    }
 
+    /**
+     * 生成服务类代码
+     *
+     * @param serviceParm
+     * @return
+     * @throws IOException
+     * @throws TemplateException
+     */
     public String createServiceString(BaseParm serviceParm) throws IOException, TemplateException {
         String resultStr = "";
         StringWriter writer = new StringWriter();
@@ -243,10 +263,12 @@ public class CreaterService {
     }
 
     /**
-     * 1、tableName
-     * 2、menuName
-     * 3、menuTitle
-     * 4、PK
+     * 创建增删改查前端代码
+     *
+     * 1、tableName 表名
+     * 2、menuName  功能名
+     * 3、menuTitle 菜单标题
+     * 4、PK 主键
      *
      * @param datagridParm
      * @return
@@ -256,26 +278,36 @@ public class CreaterService {
     public String createDatagridString(DatagridParm datagridParm) throws IOException, TemplateException {
         Map<String, Object> paramMap = new HashMap<String, Object>();
         String tableName = datagridParm.getTableName();
-//        tableName = StringUtil.underlineToCamel(tableName);//表名
         //功能名
         String menuName = datagridParm.getMenuName();
         //功能标题
         String menuTitle = datagridParm.getMenuTitle();
+
+        //填充变量
         paramMap.put("tableName", StringUtil.underlineToCamel(tableName));
         paramMap.put("menuName", menuName);
         paramMap.put("menuTitle", menuTitle);
+
         Configuration configuration = new Configuration(Configuration.DEFAULT_INCOMPATIBLE_IMPROVEMENTS);
-        String resultDirStr = createrCfg.getSrcPath() + TMP_ROOT_PATH + StringUtil.underlineToCamel(tableName);
-        File resultDir = new File(resultDirStr);
-        if (!resultDir.exists()) {
-            resultDir.mkdir();
+
+        //目标目录字符串
+        String targetDirPath = createrCfg.getSrcPath() + TMP_ROOT_PATH + StringUtil.underlineToCamel(tableName);
+        //目标目录
+        File targetDir = new File(targetDirPath);
+
+        //如果不存在目标目录,则创建新的目录
+        if (!targetDir.exists()) {
+            targetDir.mkdir();
         }
+        //模板目录
         File dir = new File(createrCfg.getSrcPath() + TMP_DATAGRID_PATH);
         configuration.setDirectoryForTemplateLoading(dir);
         configuration.setObjectWrapper(new DefaultObjectWrapper(Configuration.DEFAULT_INCOMPATIBLE_IMPROVEMENTS));
         configuration.setDefaultEncoding("UTF-8");
         Template template = configuration.getTemplate("datagrid-base-crud-js.ftl");
         List<Column> columns = createrMapper.getColumns(tableName, createrCfg.getTableSchema());
+
+        //时间类型修改控件
         for (Column column : columns) {
             column.set_columnName(StringUtil.underlineToCamel(column.getColumnName()));
             String columnType = column.getColumnType();
@@ -289,10 +321,15 @@ public class CreaterService {
             }
         }
         paramMap.put("columns", columns);
-        StringWriter writer = new StringWriter();
+
+        //目标文件名
         String targetFileName = menuName + ".ftl";
-        Writer writer1 = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(new File(resultDirStr + "\\" + targetFileName)), "UTF-8"));
+
+        //写带字符串变量中
+        StringWriter writer = new StringWriter();
         template.process(paramMap, writer);
+        //写入文件
+        Writer writer1 = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(new File(targetDirPath + "\\" + targetFileName)), "UTF-8"));
         template.process(paramMap, writer1);
 
         // 创建功能菜单
@@ -301,6 +338,7 @@ public class CreaterService {
         menu.setMenuUrl(StringUtil.underlineToCamel(tableName) + "/" + StringUtil.underlineToCamel(tableName) + "Manager");
         menu.setParentMenuId(DEFAULT_PARENT_MENU_ID);
         menuService.saveMenu(menu);
+
         return writer.toString();
     }
 
@@ -343,7 +381,6 @@ public class CreaterService {
         String resultFile = dir.getAbsolutePath() + "/model.java";
         StringWriter writer = new StringWriter();
         template.process(paramMap, writer);
-        System.out.println(writer.toString());
         return writer.toString();
     }
 }
