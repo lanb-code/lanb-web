@@ -19,6 +19,15 @@ creater:
   table-schema: lanbweb
 ```
 
+generatorConfig.xml
+```xml
+<jdbcConnection driverClass="com.mysql.jdbc.Driver"
+                        connectionURL="jdbc:mysql://127.0.0.1:3306/lanbweb?useUnicode=true&amp;characterEncoding=utf-8&amp;useSSL=false"
+                        userId="root"
+                        password=""
+        >
+```
+
 分别为项目源代码路径,和数据库名,这些参数用于解决一些生成的问题.
  
 ## 设计数据表  
