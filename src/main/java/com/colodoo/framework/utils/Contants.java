@@ -47,6 +47,9 @@ public class Contants {
     //注册失败
     public static final String REG_FAIL = "注册失败";
 
+    /*会话相关*/
+    public static final String SESSION_OBJECT_KEY = "sessionObject";
+
     /*其他*/
 
 

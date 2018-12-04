@@ -24,6 +24,9 @@ import java.util.List;
 @Slf4j
 public class RoleUserService extends BaseService<RoleUser> {
 
+    @Autowired
+    RoleUserMapper roleUserMapper;
+
     /**
      * 新增数据
      *
@@ -98,7 +101,8 @@ public class RoleUserService extends BaseService<RoleUser> {
      */
     public List<RoleUserVO> query() {
         List<RoleUserVO> list = null;
-        list = this.select("select", null);
+        // list = this.select("select", null);
+        list = roleUserMapper.select();
         return list;
     }
 

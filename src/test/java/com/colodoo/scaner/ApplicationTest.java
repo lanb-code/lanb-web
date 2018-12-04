@@ -2,32 +2,23 @@ package com.colodoo.scaner;
 
 import com.colodoo.Application;
 import com.colodoo.framework.easyui.Page;
-import com.colodoo.framework.exception.DAOException;
-import com.colodoo.framework.manager.codeInfo.model.CodeInfo;
-import com.colodoo.framework.manager.codeInfo.service.CodeInfoService;
 import com.colodoo.framework.utils.SpringContextsUtil;
-import com.colodoo.framework.utils.StringUtil;
 import com.colodoo.manager.test.model.TestExample;
 import com.colodoo.manager.test.service.TestService;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.ibatis.annotations.Mapper;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.mock.web.MockHttpSession;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.MockMvcBuilder;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
 import java.util.Date;
-import java.util.List;
 import java.util.Random;
 
 
@@ -52,11 +43,9 @@ public class ApplicationTest {
     @Test
     @Rollback
     public void testDelete() {
-        try {
-            testService.delete("415c6d3bdcd342dfa07c6a1c14ac8e7c");
-        } catch (DAOException e) {
-            e.printStackTrace();
-        }
+        com.colodoo.manager.test.model.Test test = new com.colodoo.manager.test.model.Test();
+        test.setTestId("415c6d3bdcd342dfa07c6a1c14ac8e7c");
+        testService.deleteTest(test);
     }
 
     @Test

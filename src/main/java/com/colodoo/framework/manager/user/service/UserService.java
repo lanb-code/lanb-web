@@ -59,6 +59,12 @@ public class UserService {
         return new PageInfo(userMapper.selectByExample(null));
     }
 
+    /**
+     * 登录校验
+     *
+     * @param model
+     * @return
+     */
     public Msg loginCheck(User model) {
         Msg msg = new Msg();
         //是否存在空参数
@@ -94,6 +100,11 @@ public class UserService {
         }
     }
 
+    /**
+     * 登录失败操作
+     *
+     * @param model
+     */
     public void failLogin(User model) {
         UserExample example = new UserExample();
         example.createCriteria().andUserNameEqualTo(model.getUserName());

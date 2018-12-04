@@ -348,7 +348,7 @@ public abstract class BaseService<M> {
      *
      * @return
      */
-    public SqlSession getSession() {
+    public SqlSession getMybatisSession() {
         return this.sessionFactory.openSession();
     }
 
@@ -364,7 +364,7 @@ public abstract class BaseService<M> {
 
     /*取当前会话对象*/
     public SessionObject getSessionObject() {
-        return (SessionObject) session.getAttribute("sessionObject");
+        return (SessionObject) session.getAttribute(Contants.SESSION_OBJECT_KEY);
     }
 
 }
