@@ -6,9 +6,12 @@ import com.colodoo.framework.utils.Contants;
 import com.colodoo.manager.test.model.Test;
 import com.colodoo.framework.easyui.Page;
 import com.colodoo.manager.test.model.TestExample;
+import com.colodoo.manager.test.model.TestVO;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import lombok.extern.slf4j.Slf4j;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -22,6 +25,9 @@ import java.util.List;
 @Slf4j
 public class TestService extends BaseService<Test> {
 
+	@Autowired
+	TestRelationMapper testRelationMapper;
+	
     /**
     * 新增数据
     *
@@ -104,7 +110,7 @@ public class TestService extends BaseService<Test> {
         }
         return list;
     }
-
+    
     /**
     * 查找分页列表
     *
@@ -113,13 +119,9 @@ public class TestService extends BaseService<Test> {
     */
     public PageInfo query(Page page) {
         PageInfo pageInfo;
-        List<Test> list = null;
+        List<TestVO> list = null;
         PageHelper.startPage(page.getPage(), page.getRows());
-        try {
-            list = this.find();
-        } catch (DAOException e) {
-            log.error(e.getMsg());
-        }
+        list = testRelationMapper.getList();
         pageInfo = new PageInfo(list);
         return pageInfo;
     }
